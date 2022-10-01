@@ -11,21 +11,21 @@ namespace Game
 
         public float PowerDrainModifier { get; set; } = 1.0f;
 
-        private float currentPower = 10;
+        public float CurrentPower { get; private set; } = 10;
 
         public override void _Process(float delta)
         {
             base._Process(delta);
-            currentPower = Mathf.Clamp(currentPower - delta * PowerDrainModifier, 0, MAXIMUM_POWER);
-            EmitSignal(nameof(on_power_changed), currentPower);
-            if (Mathf.IsZeroApprox(currentPower))
+            CurrentPower = Mathf.Clamp(CurrentPower - delta * PowerDrainModifier, 0, MAXIMUM_POWER);
+            EmitSignal(nameof(on_power_changed), CurrentPower);
+            if (Mathf.IsZeroApprox(CurrentPower))
                 SetProcess(false);
         }
 
         public void Add(float power)
         {
-            currentPower = Mathf.Clamp(currentPower + power, 0, MAXIMUM_POWER);
-            EmitSignal(nameof(on_power_changed), currentPower);
+            CurrentPower = Mathf.Clamp(CurrentPower + power, 0, MAXIMUM_POWER);
+            EmitSignal(nameof(on_power_changed), CurrentPower);
         }
     }
 }

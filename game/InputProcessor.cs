@@ -45,7 +45,7 @@ namespace Game
                 GetTree().SetInputAsHandled();
                 if (Player.IsInAir && Player.CoyoteTime > 1.0f)
                 {
-                    if (Player.HasDash)
+                    if (Player.HasDash && Player.HasPowerForDash)
                         Player.DashPressed();
                     return;
                 }

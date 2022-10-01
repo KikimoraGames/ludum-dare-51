@@ -539,6 +539,7 @@ FallSpeedEaseCurve = SubResource( 17 )
 DashDistance = 128.0
 DashDistanceSpeedEaseCurve = SubResource( 19 )
 DashSpeedPixelsPerSecond = 1500.0
+DashPowerCost = 1.25
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -27 )

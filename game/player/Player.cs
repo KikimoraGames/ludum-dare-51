@@ -38,11 +38,14 @@ namespace Game
         public float DashHangTimeSeconds { get; private set; } = 0.15f;
         [Export]
         public float CoyoteTimeSeconds { get; private set; } = 0.2f;
+        [Export]
+        public float DashPowerCost { get; private set; } = 1f;
 
         public bool IsJumpButtonHeld { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
         public bool IsInAir { get; private set; } = false;
         public bool HasDash { get; private set; } = true;
+        public bool HasPowerForDash => PlayerPower.Instance.CurrentPower >= DashPowerCost;
         public bool IsDashing { get; private set; } = false;
         public Vector2 DashDirection { get; private set; } = Vector2.Zero;
 
@@ -86,6 +89,7 @@ namespace Game
             IsDashing = true;
             dashDistanceCovered = 0f;
             dashHangTimeCurrent = 0f;
+            PlayerPower.Instance.PowerDrainModifier = 0.0f;
 
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var dashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection).Normalized();
@@ -95,6 +99,8 @@ namespace Game
 
         private void DashDone()
         {
+            PlayerPower.Instance.PowerDrainModifier = 1.0f;
+            PlayerPower.Instance.Add(-DashPowerCost);
             IsDashing = false;
             timeSpentFalling = 0f;
         }
