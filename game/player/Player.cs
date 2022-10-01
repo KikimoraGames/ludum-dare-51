@@ -9,18 +9,25 @@ namespace Game
         private static string ACTION_JUMP = "action_jump";
 
         [Export]
-        public float MovementSpeedPixelsPerSecond { get; private set; } = 150;
+        public float MovementSpeedPixelsPerSecond { get; private set; } = 250;
         [Export]
         public float JumpSpeedPixelsPerSecond { get; private set; } = 500f;
         [Export]
         public Curve JumpSpeedHoldTimeModifierCurve { get; private set; }
 
         [Export]
-        public float JumpHorizontalSpeedPixelsPerSecond { get; private set; } = 50;
+        public float JumpHorizontalSpeedPixelsPerSecond { get; private set; } = 200;
         [Export]
         public float MaxJumpHeldDownTimeSeconds { get; private set; } = 0.25f;
         [Export]
-        public float FallingSpeedPixelsPerSecond { get; private set; } = 200f;
+        public float MinFallingSpeedPixelsPerSecond { get; private set; } = 150f;
+        [Export]
+        public float MaxFallingSpeedPixelsPerSecond { get; private set; } = 250f;
+        [Export]
+        public float MaxFallingSpeedReachTimeSeconds { get; private set; } = 0.1f;
+        [Export]
+        public Curve FallSpeedEaseCurve { get; private set; }
+
         [Export]
         public float CoyoteTimeSeconds { get; private set; } = 0.2f;
 
@@ -30,6 +37,7 @@ namespace Game
         private ulong isInAirSinceMsec;
 
         public float CoyoteTime => ((Time.GetTicksMsec() - isInAirSinceMsec) / 1000f) / CoyoteTimeSeconds;
+        private float timeSpentFalling = 0f;
 
         public bool IsSleeping { get; private set; } = false;
 
@@ -42,6 +50,7 @@ namespace Game
         public void JumpReleased()
         {
             IsJumping = false;
+            timeSpentFalling = 0f;
         }
 
         public override void _PhysicsProcess(float delta)
@@ -55,10 +64,17 @@ namespace Game
                 if (jumpHeldFor <= 1.0f)
                     verticalVelocity *= JumpSpeedPixelsPerSecond * JumpSpeedHoldTimeModifierCurve.Interpolate(jumpHeldFor);
                 else
+                {
                     IsJumping = false;
+                    timeSpentFalling = 0f;
+                }
             }
             else
-                verticalVelocity *= -FallingSpeedPixelsPerSecond;
+            {
+                timeSpentFalling += delta;
+                var fallSpeed = MinFallingSpeedPixelsPerSecond + MaxFallingSpeedPixelsPerSecond * FallSpeedEaseCurve.Interpolate(timeSpentFalling / MaxFallingSpeedReachTimeSeconds);
+                verticalVelocity *= -fallSpeed;
+            }
 
             if (!IsInAir)
                 horizontalVelocity *= MovementSpeedPixelsPerSecond;
@@ -77,6 +93,7 @@ namespace Game
 
             if (IsOnFloor())
             {
+                timeSpentFalling = 0f;
                 IsInAir = false;
             }
         }

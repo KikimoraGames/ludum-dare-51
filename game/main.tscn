@@ -168,8 +168,6 @@ current = true
 script = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-MovementSpeedPixelsPerSecond = 250.0
-JumpHorizontalSpeedPixelsPerSecond = 200.0
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 2 )
