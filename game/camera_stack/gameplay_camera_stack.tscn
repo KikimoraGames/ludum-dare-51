@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://game/camera_stack/CameraStack.cs" type="Script" id=2]
+[ext_resource path="res://addons/virtualcamera/transform_modifiers/follow_dampened.gd" type="Script" id=3]
+[ext_resource path="res://addons/virtualcamera/transform_modifiers/user_input/look_ahead.gd" type="Script" id=4]
+[ext_resource path="res://addons/virtualcamera/transform_modifiers/shake_impulse.gd" type="Script" id=5]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+seed = 124365
+octaves = 4
+persistence = 0.8
+
+[node name="GameplayCameraStack" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="FollowTargetDampened" type="Node2D" parent="."]
+process_priority = 1000
+script = ExtResource( 3 )
+spring_constant = 50.0
+
+[node name="TargetLookAhead" type="Node2D" parent="FollowTargetDampened"]
+process_priority = 1000
+script = ExtResource( 4 )
+look_ahead_distance = 75.0
+spring_constant_look_ahead = 20.0
+spring_constant_return = 100.0
+
+[node name="ShakeImpulse" type="Node2D" parent="FollowTargetDampened/TargetLookAhead"]
+script = ExtResource( 5 )
+noise = SubResource( 1 )

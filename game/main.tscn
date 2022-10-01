@@ -1,12 +1,13 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://game/Main.cs" type="Script" id=1]
 [ext_resource path="res://game/player/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tilesheet_complete.png" type="Texture" id=3]
 [ext_resource path="res://addons/virtualcamera/vcamera_brain.gd" type="Script" id=4]
-[ext_resource path="res://addons/virtualcamera/vcameras/vcamera.gd" type="Script" id=5]
-[ext_resource path="res://addons/virtualcamera/transform_modifiers/follow_dampened.gd" type="Script" id=6]
-[ext_resource path="res://addons/virtualcamera/transform_modifiers/user_input/look_ahead.gd" type="Script" id=7]
+[ext_resource path="res://game/camera_stack/zoom_camera_stack.tscn" type="PackedScene" id=5]
+[ext_resource path="res://game/camera_stack/gameplay_camera_stack.tscn" type="PackedScene" id=6]
+[ext_resource path="res://game/InputProcessor.cs" type="Script" id=7]
+[ext_resource path="res://addons/virtualcamera/vcameras/vcamera.gd" type="Script" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -143,13 +144,30 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 32, 32 )
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
 
+[node name="GameplayCameraStack" parent="." instance=ExtResource( 6 )]
+
+[node name="GameplayCamera" type="Node2D" parent="GameplayCameraStack" groups=["vcamera"]]
+script = ExtResource( 8 )
+priority = 11
+
+[node name="ZoomCameraStack" parent="." instance=ExtResource( 5 )]
+
+[node name="ZoomCamera" type="Node2D" parent="ZoomCameraStack" groups=["vcamera"]]
+script = ExtResource( 8 )
+transition_time = 5.0
+zoom = Vector2( 3, 3 )
+
+[node name="InputProcessor" type="Node" parent="."]
+script = ExtResource( 7 )
+PlayerPath = NodePath("../Player")
+GameplayCameraStackPath = NodePath("../GameplayCameraStack")
+ZoomCameraStackPath = NodePath("../ZoomCameraStack")
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 20, -170 )
 current = true
 script = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 20, -170 )
 MovementSpeedPixelsPerSecond = 250.0
 JumpHorizontalSpeedPixelsPerSecond = 200.0
 
@@ -159,21 +177,4 @@ show_collision = true
 collision_layer = 2147483648
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 65532, 0, 2, 65534, 0, 1, 65535, 0, 2, 0, 0, 2, 1, 0, 3, 3, 0, 2 )
-
-[node name="FollowTargetDampened" type="Node2D" parent="."]
-process_priority = 1000
-position = Vector2( 20, -170 )
-script = ExtResource( 6 )
-target_path = NodePath("../Player")
-spring_constant = 50.0
-
-[node name="TargetLookAhead" type="Node2D" parent="FollowTargetDampened"]
-process_priority = 1000
-script = ExtResource( 7 )
-look_ahead_distance = 75.0
-spring_constant_look_ahead = 20.0
-spring_constant_return = 100.0
-
-[node name="VCamera" type="Node2D" parent="FollowTargetDampened/TargetLookAhead" groups=["vcamera"]]
-script = ExtResource( 5 )
+tile_data = PoolIntArray( 131068, 0, 2, 131070, 0, 1, 131071, 0, 2, 65536, 0, 2, 65537, 0, 3, 65539, 0, 2 )

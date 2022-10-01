@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game/audio/sfx/SFXChannel.cs" type="Script" id=1]
+[ext_resource path="res://game/art/audio/ui/ui_buttonpush_01.ogg" type="AudioStream" id=2]
+
+[node name="SFXChannel" type="Node"]
+script = ExtResource( 1 )
+defaultBus = "SFX"
+inventoryFullSFX = ExtResource( 2 )
+inventoryFullSFXBus = "SFX_UI"
+
+[node name="SFXChannel_1" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_2" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_3" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_4" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_5" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_6" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_7" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_8" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_9" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_10" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_11" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_12" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_13" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_14" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]
+
+[node name="SFXChannel_15" type="AudioStreamPlayer" parent="." groups=["sfx_channels"]]

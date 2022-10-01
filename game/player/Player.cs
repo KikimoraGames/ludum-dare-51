@@ -24,39 +24,30 @@ namespace Game
         [Export]
         public float CoyoteTimeSeconds { get; private set; } = 0.2f;
 
-        private bool IsJumping { get; set; } = false;
-        private bool IsInAir { get; set; } = false;
+        public bool IsJumping { get; private set; } = false;
+        public bool IsInAir { get; private set; } = false;
         private ulong jumpHeldSinceMsec;
         private ulong isInAirSinceMsec;
 
-        private float CoyoteTime => ((Time.GetTicksMsec() - isInAirSinceMsec) / 1000f) / CoyoteTimeSeconds;
-        public override void _UnhandledInput(InputEvent e)
+        public float CoyoteTime => ((Time.GetTicksMsec() - isInAirSinceMsec) / 1000f) / CoyoteTimeSeconds;
+
+        public bool IsSleeping { get; private set; } = false;
+
+        public void JumpPressed()
         {
-            base._UnhandledInput(e);
-            if (e.IsEcho())
-                return;
+            IsJumping = true;
+            jumpHeldSinceMsec = Time.GetTicksMsec();
+        }
 
-            if (e.IsActionPressed(ACTION_JUMP))
-            {
-                if (!IsInAir || CoyoteTime <= 1.0f)
-                {
-                    GetTree().SetInputAsHandled();
-                    IsJumping = true;
-                    jumpHeldSinceMsec = Time.GetTicksMsec();
-                }
-            }
-
-            if (e.IsActionReleased(ACTION_JUMP))
-            {
-                GetTree().SetInputAsHandled();
-                IsJumping = false;
-            }
+        public void JumpReleased()
+        {
+            IsJumping = false;
         }
 
         public override void _PhysicsProcess(float delta)
         {
             base._PhysicsProcess(delta);
-            var horizontalVelocity = new Vector2(Input.GetAxis("move_left", "move_right"), 0);
+            var horizontalVelocity = InputProcessor.InputVelocity;
             var verticalVelocity = Vector2.Up;
             if (IsJumping)
             {
@@ -88,6 +79,16 @@ namespace Game
             {
                 IsInAir = false;
             }
+        }
+
+        public void SleepReleased()
+        {
+            IsSleeping = false;
+        }
+
+        public void SleepPressed()
+        {
+            IsSleeping = true;
         }
     }
 }

@@ -8,6 +8,8 @@ export var enabled : bool = true
 
 export var transition_time : float = 1.0
 export(float, EASE) var transition_ease : float = -2.0
+export var zoom : Vector2 = Vector2.ONE
+
 
 func _ready():
 	add_to_group("vcamera", true)

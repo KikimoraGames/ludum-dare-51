@@ -15,8 +15,9 @@ func _ready():
 
 
 func _process(delta : float):
-	if target == null || not is_instance_valid(target):
-		target = get_node(target_path)
+	if Engine.editor_hint && (target == null || not is_instance_valid(target)):
+		if target_path:
+			target = get_node(target_path)
 	
 	if not is_instance_valid(target):
 		return

@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/virtualcamera/transform_modifiers/user_input/look_ahead.gd"
 }, {
+"base": "Reference",
+"class": "SafeFrameTimer",
+"language": "GDScript",
+"path": "res://game/util/safe_frame_timer.gd"
+}, {
 "base": "Node2D",
 "class": "ShakeImpulse",
 "language": "GDScript",
@@ -37,7 +42,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Util",
 "language": "GDScript",
-"path": "res://game/util.gd"
+"path": "res://game/util/util.gd"
 }, {
 "base": "Node2D",
 "class": "VCamera",
@@ -57,6 +62,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "FollowDampened": "",
 "LookAhead": "",
+"SafeFrameTimer": "",
 "ShakeImpulse": "",
 "TransformModifier": "res://addons/virtualcamera/transform_modifiers/transform_modifier.svg",
 "UserInput": "",
@@ -72,6 +78,10 @@ config/name="ldjam51"
 run/main_scene="res://game/main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Events="*res://game/events/Events.cs"
+
 [display]
 
 window/size/width=640
@@ -83,7 +93,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg", "res://addons/virtualcamera/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/AsepriteWizard/plugin.cfg" )
 
 [gui]
 
@@ -151,6 +161,24 @@ action_jump={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":32,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+action_boneblock={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":69,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+action_sleep={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":81,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":3,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+action_bark={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777237,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 
