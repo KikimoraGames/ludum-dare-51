@@ -20,6 +20,8 @@ namespace Game
 
         public bool IgnoreInput = false;
 
+        public Vector2 LastNonZeroDirection { get; private set; } = Vector2.Right;
+
         [OnReady]
         private void SetupStackTargets()
         {
@@ -42,7 +44,11 @@ namespace Game
             {
                 GetTree().SetInputAsHandled();
                 if (Player.IsInAir && Player.CoyoteTime > 1.0f)
+                {
+                    if (Player.HasDash)
+                        Player.DashPressed();
                     return;
+                }
 
                 Player.JumpPressed();
                 return;
@@ -83,7 +89,10 @@ namespace Game
                     return Vector2.Zero;
                 if (Player.IsSleeping)
                     return Vector2.Zero;
-                return new Vector2(Input.GetAxis("move_left", "move_right"), 0);
+                var v = new Vector2(Input.GetAxis("move_left", "move_right"), Input.GetAxis("look_up", "look_down"));
+                if (v.LengthSquared() > 0.1f)
+                    LastNonZeroDirection = v;
+                return v;
             }
         }
     }
