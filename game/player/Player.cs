@@ -29,7 +29,12 @@ namespace Game
         [Export]
         public float DashDistance { get; private set; } = 200f;
         [Export]
+        public Curve DashDistanceSpeedEaseCurve { get; private set; }
+        [Export]
         public float DashSpeedPixelsPerSecond { get; private set; } = 1000f;
+        [Export]
+        public float DashHangTimeSeconds { get; private set; } = 0.15f;
+
 
         [Export]
         public float CoyoteTimeSeconds { get; private set; } = 0.2f;
@@ -47,6 +52,7 @@ namespace Game
         private float timeSpentFalling = 0f;
 
         private float dashDistanceCovered = 0f;
+        private float dashHangTimeCurrent = 0f;
 
         public bool IsSleeping { get; private set; } = false;
 
@@ -62,15 +68,18 @@ namespace Game
             timeSpentFalling = 0f;
         }
 
-        // TODO: Dash hang time, 4 directional dash
         public void DashPressed()
         {
             HasDash = false;
             IsJumping = false;
             IsDashing = true;
-            var inputVelocity = InputProcessor.Instance.InputVelocity;
-            DashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection).Normalized();
             dashDistanceCovered = 0f;
+            dashHangTimeCurrent = 0f;
+
+            var inputVelocity = InputProcessor.Instance.InputVelocity;
+            var dashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection).Normalized();
+            dashDirection = Mathf.Abs(dashDirection.x) > Mathf.Abs(dashDirection.y) ? new Vector2(dashDirection.x, 0) : new Vector2(0, dashDirection.y);
+            DashDirection = dashDirection.Normalized();
         }
 
         private void DashDone()
@@ -88,19 +97,27 @@ namespace Game
             if (IsDashing)
             {
                 var oldPosition = GlobalPosition;
-                var dashVelocity = DashDirection * DashSpeedPixelsPerSecond;
+                var dashVelocity = DashDirection * DashSpeedPixelsPerSecond * DashDistanceSpeedEaseCurve.Interpolate(dashDistanceCovered / DashDistance);
+                if (dashDistanceCovered > DashDistance)
+                {
+                    dashHangTimeCurrent += delta;
+                    if (dashHangTimeCurrent >= DashHangTimeSeconds)
+                        DashDone();
+                    return;
+                }
 
                 var collision = MoveAndCollide(dashVelocity * delta, testOnly: true);
                 if (collision != null)
                 {
-                    DashDone();
+                    dashDistanceCovered += DashDistance;
                     return;
                 }
+
                 MoveAndSlide(dashVelocity, Vector2.Up, false);
                 var newPosition = GlobalPosition;
                 dashDistanceCovered += oldPosition.DistanceTo(newPosition);
-                if (dashDistanceCovered > DashDistance)
-                    DashDone();
+
+
                 return;
             }
 
