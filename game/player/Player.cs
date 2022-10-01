@@ -124,9 +124,7 @@ namespace Game
 
             horizontalVelocity *= MovementSpeedPixelsPerSecond;
             if (IsInAir)
-            {
                 horizontalVelocity += Vector2.Right * jumpCurrentHorizontalMomentumVelocity;
-            }
 
             lastFrameVelocity = MoveAndSlide(horizontalVelocity + verticalVelocity, Vector2.Up, true);
             var isOnFloor = IsOnFloor();
