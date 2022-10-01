@@ -187,11 +187,13 @@ namespace Game
         public void SleepReleased()
         {
             IsSleeping = false;
+            PlayerPower.Instance.PowerDrainModifier = 1f;
         }
 
         public void SleepPressed()
         {
             IsSleeping = true;
+            PlayerPower.Instance.PowerDrainModifier = 0f;
         }
     }
 }
