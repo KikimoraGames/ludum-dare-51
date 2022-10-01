@@ -18,7 +18,7 @@ namespace Game
         [OnReadyGet]
         private CameraStack ZoomCameraStack { get; set; }
 
-        public static bool IgnoreInput = false;
+        public bool IgnoreInput = false;
 
         [OnReady]
         private void SetupStackTargets()
@@ -75,11 +75,13 @@ namespace Game
             }
         }
 
-        public static Vector2 InputVelocity
+        public Vector2 InputVelocity
         {
             get
             {
                 if (IgnoreInput)
+                    return Vector2.Zero;
+                if (Player.IsSleeping)
                     return Vector2.Zero;
                 return new Vector2(Input.GetAxis("move_left", "move_right"), 0);
             }

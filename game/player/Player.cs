@@ -47,7 +47,7 @@ namespace Game
         public override void _PhysicsProcess(float delta)
         {
             base._PhysicsProcess(delta);
-            var horizontalVelocity = InputProcessor.InputVelocity;
+            var horizontalVelocity = InputProcessor.Instance.InputVelocity;
             var verticalVelocity = Vector2.Up;
             if (IsJumping)
             {
