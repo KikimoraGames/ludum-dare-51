@@ -14,6 +14,9 @@ namespace Game
         public float JumpSpeedPixelsPerSecond { get; private set; } = 500f;
         [Export]
         public Curve JumpSpeedHoldTimeModifierCurve { get; private set; }
+
+        [Export]
+        public float JumpHorizontalSpeedPixelsPerSecond { get; private set; } = 50;
         [Export]
         public float MaxJumpHeldDownTimeSeconds { get; private set; } = 0.25f;
         [Export]
@@ -66,7 +69,11 @@ namespace Game
             else
                 verticalVelocity *= -FallingSpeedPixelsPerSecond;
 
-            horizontalVelocity *= MovementSpeedPixelsPerSecond;
+            if (!IsInAir)
+                horizontalVelocity *= MovementSpeedPixelsPerSecond;
+            else
+                horizontalVelocity *= JumpHorizontalSpeedPixelsPerSecond;
+
             MoveAndSlide(horizontalVelocity + verticalVelocity, Vector2.Up, true);
             if (!IsOnFloor() && !IsInAir)
             {
@@ -81,8 +88,6 @@ namespace Game
             {
                 IsInAir = false;
             }
-
-            GD.Print(CoyoteTime);
         }
     }
 }
