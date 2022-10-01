@@ -1,0 +1,106 @@
+name: Build
+env:
+  GODOT_VERSION: 3.5.1.stable
+  EXPORT_NAME: Puppy
+  ITCH_USERNAME: kikimora
+  ITCH_GAME_ID: puppy
+  ITCH_URL: https://kikimora.itch.io/puppy
+on:
+  push:
+    branches: [master]
+jobs:
+  version:
+    name: Version
+    runs-on: ubuntu-latest
+    outputs:
+      version_hash: ${{ steps.calculate.outputs.version_hash }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - id: calculate
+        run: echo "::set-output name=version_hash::$(git rev-parse --short HEAD)"
+  build:
+    strategy:
+      matrix:
+        include:
+          - template: windows
+            export_name: $EXPORT_NAME.exe
+          - template: html
+            export_name: index.html
+      fail-fast: true
+    name: Build ${{ matrix.template }}
+    runs-on: ubuntu-latest
+    needs: [version]
+    container:
+      image: ghcr.io/theorioli/godot-ci:mono-3.5.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Cache
+        uses: actions/cache@v3.0.2
+        with:
+          path: |
+            ./.import
+          key: ${{ runner.os }}-${{env.GODOT_VERSION}}-${{ matrix.template }}-${{ secrets.CACHE_VERSION }}
+      - name: Build
+        uses: ./.github/actions/build_action
+        with:
+          version: ${{ needs.version.outputs.version_hash }}
+          template: ${{matrix.template}}
+          export_name: ${{matrix.export_name}}
+  update_icon:
+    runs-on: windows-2019
+    name: Update Windows Icon
+    needs: [build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - uses: actions/download-artifact@v2.0.8
+        with:
+          name: windows
+          path: build/windows
+      # - id: set_icon
+      #   run: .ci\update_windows_icon.ps1 .\build\windows\Nezumi.exe .\game\art\game_icon\game_icon.ico
+      - uses: actions/upload-artifact@v2.2.2
+        with:
+          name: windows
+          path: build/windows
+          retention-days: 1
+  deploy:
+    needs: [build, update_icon, version]
+    strategy:
+      fail-fast: true
+      matrix:
+        template:
+          - windows
+          - html
+    runs-on: ubuntu-latest
+    name: Deploy - Itch.io ${{ matrix.template }}
+    steps:
+      - uses: actions/download-artifact@v2.0.8
+        with:
+          name: ${{ matrix.template }}
+          path: build/${{ matrix.template }}
+      - uses: KikimoraGames/itch-publish@v0.0.1
+        with:
+          butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+          gameData: ./build/${{ matrix.template }}
+          itchUsername: ${{env.ITCH_USERNAME}}
+          itchGameId: ${{env.ITCH_GAME_ID}}
+          buildChannel: ${{ matrix.template }}
+          buildNumber: ${{ needs.version.outputs.version_hash }}
+  notify:
+    needs: [deploy, version]
+    name: Notify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_GJ }}
+        with:
+          args: "Build ${{ needs.version.outputs.version_hash }} deployed to: ${{ env.ITCH_URL }}"

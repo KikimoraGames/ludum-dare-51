@@ -1,0 +1,55 @@
+name: "Build"
+description: "Build the game"
+inputs:
+  version:
+    description: "Version of the game"
+    required: true
+    default: "v0.0.0"
+  export_flag:
+    description: "--export-debug || --export"
+    required: true
+    default: "--export-debug"
+  export_name:
+    description: "name of the exported executable"
+    required: true
+  template:
+    description: "what template to use"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Install Aseprite
+      shell: bash
+      run: |
+        apt-get update -qq
+        apt-get install -y libxcursor-dev libgl1-mesa-dev libfontconfig1-dev
+        apt install ./.ci/aseprite.deb
+    - name: Install DotNet
+      shell: bash
+      run: |
+        wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+        dpkg -i packages-microsoft-prod.deb
+        rm packages-microsoft-prod.deb
+        apt-get update -qq
+        apt-get install -y apt-transport-https
+        apt-get update -qq
+        apt-get install -y dotnet-sdk-6.0
+    - name: Setup
+      shell: bash
+      run: |
+        mkdir -v -p ~/.local/share/godot/templates
+        mv /root/.local/share/godot/templates/${GODOT_VERSION}.mono ~/.local/share/godot/templates/${GODOT_VERSION}.mono
+    - name: Version Write
+      shell: bash
+      run: echo ${{ inputs.version }} > version.txt
+    - name: Create Directory
+      shell: bash
+      run: mkdir -v -p build/${{inputs.template}}
+    - name: Build
+      shell: bash
+      run: godot --verbose ${{inputs.export_flag}} ${{inputs.template}} build/${{inputs.template}}/${{inputs.export_name}}
+    - uses: actions/upload-artifact@v2.2.2
+      with:
+        name: ${{inputs.template}}
+        path: build/${{inputs.template}}
+        retention-days: 1
