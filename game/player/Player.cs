@@ -13,9 +13,11 @@ namespace Game
         [Export]
         public float JumpSpeedPixelsPerSecond { get; private set; } = 500f;
         [Export]
+        public float JumpHangTimeSeconds { get; private set; } = 0.1f;
+        [Export]
         public Curve JumpSpeedHoldTimeModifierCurve { get; private set; }
         [Export]
-        public float JumpHorizontalSpeedPixelsPerSecond { get; private set; } = 200;
+        public Curve JumpMomentumFalloffCurve { get; private set; }
         [Export]
         public float MaxJumpHeldDownTimeSeconds { get; private set; } = 0.25f;
         [Export]
@@ -34,11 +36,10 @@ namespace Game
         public float DashSpeedPixelsPerSecond { get; private set; } = 1000f;
         [Export]
         public float DashHangTimeSeconds { get; private set; } = 0.15f;
-
-
         [Export]
         public float CoyoteTimeSeconds { get; private set; } = 0.2f;
 
+        public bool IsJumpButtonHeld { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
         public bool IsInAir { get; private set; } = false;
         public bool HasDash { get; private set; } = true;
@@ -46,6 +47,11 @@ namespace Game
         public Vector2 DashDirection { get; private set; } = Vector2.Zero;
 
         private ulong jumpHeldSinceMsec;
+        private float jumpDistanceCovered = 0f;
+        private float jumpHangTimeCurrent = 0f;
+        private float jumpStartHorizontalMomentumVelocity;
+        private float jumpCurrentHorizontalMomentumVelocity;
+
         private ulong isInAirSinceMsec;
 
         public float CoyoteTime => ((Time.GetTicksMsec() - isInAirSinceMsec) / 1000f) / CoyoteTimeSeconds;
@@ -55,16 +61,21 @@ namespace Game
         private float dashHangTimeCurrent = 0f;
 
         public bool IsSleeping { get; private set; } = false;
+        private Vector2 lastFrameVelocity;
 
         public void JumpPressed()
         {
             IsJumping = true;
+            IsJumpButtonHeld = true;
+            jumpHangTimeCurrent = 0f;
             jumpHeldSinceMsec = Time.GetTicksMsec();
+            jumpStartHorizontalMomentumVelocity = lastFrameVelocity.x;
+            jumpCurrentHorizontalMomentumVelocity = jumpStartHorizontalMomentumVelocity;
         }
 
         public void JumpReleased()
         {
-            IsJumping = false;
+            IsJumpButtonHeld = false;
             timeSpentFalling = 0f;
         }
 
@@ -94,44 +105,15 @@ namespace Game
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var horizontalVelocity = Vector2.Right * inputVelocity;
             var verticalVelocity = Vector2.Up;
+
             if (IsDashing)
             {
-                var oldPosition = GlobalPosition;
-                var dashVelocity = DashDirection * DashSpeedPixelsPerSecond * DashDistanceSpeedEaseCurve.Interpolate(dashDistanceCovered / DashDistance);
-                if (dashDistanceCovered > DashDistance)
-                {
-                    dashHangTimeCurrent += delta;
-                    if (dashHangTimeCurrent >= DashHangTimeSeconds)
-                        DashDone();
-                    return;
-                }
-
-                var collision = MoveAndCollide(dashVelocity * delta, testOnly: true);
-                if (collision != null)
-                {
-                    dashDistanceCovered += DashDistance;
-                    return;
-                }
-
-                MoveAndSlide(dashVelocity, Vector2.Up, false);
-                var newPosition = GlobalPosition;
-                dashDistanceCovered += oldPosition.DistanceTo(newPosition);
-
-
+                HandleDashing(delta);
                 return;
             }
 
             if (IsJumping)
-            {
-                var jumpHeldFor = ((Time.GetTicksMsec() - jumpHeldSinceMsec) / 1000f) / MaxJumpHeldDownTimeSeconds;
-                if (jumpHeldFor <= 1.0f)
-                    verticalVelocity *= JumpSpeedPixelsPerSecond * JumpSpeedHoldTimeModifierCurve.Interpolate(jumpHeldFor);
-                else
-                {
-                    IsJumping = false;
-                    timeSpentFalling = 0f;
-                }
-            }
+                verticalVelocity = HandleJumping(verticalVelocity, delta);
             else
             {
                 timeSpentFalling += delta;
@@ -139,27 +121,69 @@ namespace Game
                 verticalVelocity *= -fallSpeed;
             }
 
-            if (!IsInAir)
-                horizontalVelocity *= MovementSpeedPixelsPerSecond;
-            else
-                horizontalVelocity *= JumpHorizontalSpeedPixelsPerSecond;
 
-            MoveAndSlide(horizontalVelocity + verticalVelocity, Vector2.Up, true);
-            if (!IsOnFloor() && !IsInAir)
+            horizontalVelocity *= MovementSpeedPixelsPerSecond;
+            if (IsInAir)
+            {
+                horizontalVelocity += Vector2.Right * jumpCurrentHorizontalMomentumVelocity;
+            }
+
+            lastFrameVelocity = MoveAndSlide(horizontalVelocity + verticalVelocity, Vector2.Up, true);
+            var isOnFloor = IsOnFloor();
+            if (!isOnFloor && !IsInAir)
             {
                 IsInAir = true;
                 if (!IsJumping)
-                {
                     isInAirSinceMsec = Time.GetTicksMsec();
-                }
             }
 
-            if (IsOnFloor())
+            if (isOnFloor)
             {
                 timeSpentFalling = 0f;
                 IsInAir = false;
                 HasDash = true;
             }
+        }
+
+        private Vector2 HandleJumping(Vector2 verticalVelocity, float delta)
+        {
+            var jumpHeldFor = ((Time.GetTicksMsec() - jumpHeldSinceMsec) / 1000f) / MaxJumpHeldDownTimeSeconds;
+            jumpCurrentHorizontalMomentumVelocity = jumpStartHorizontalMomentumVelocity * JumpMomentumFalloffCurve.Interpolate(jumpHeldFor);
+            if (IsJumpButtonHeld && jumpHeldFor <= 1.0f)
+                return verticalVelocity * JumpSpeedPixelsPerSecond * JumpSpeedHoldTimeModifierCurve.Interpolate(jumpHeldFor);
+            jumpHangTimeCurrent += delta;
+            if (jumpHangTimeCurrent >= JumpHangTimeSeconds)
+            {
+                IsJumping = false;
+                timeSpentFalling = 0f;
+            };
+
+            return verticalVelocity;
+        }
+
+        private void HandleDashing(float delta)
+        {
+            var oldPosition = GlobalPosition;
+            var dashVelocity = DashDirection * DashSpeedPixelsPerSecond * DashDistanceSpeedEaseCurve.Interpolate(dashDistanceCovered / DashDistance);
+            if (dashDistanceCovered > DashDistance)
+            {
+                dashHangTimeCurrent += delta;
+                if (dashHangTimeCurrent >= DashHangTimeSeconds)
+                    DashDone();
+                return;
+            }
+
+            var collision = MoveAndCollide(dashVelocity * delta, testOnly: true);
+            if (collision != null)
+            {
+                dashDistanceCovered += DashDistance;
+                return;
+            }
+
+            MoveAndSlide(dashVelocity, Vector2.Up, false);
+            var newPosition = GlobalPosition;
+            dashDistanceCovered += oldPosition.DistanceTo(newPosition);
+            return;
         }
 
         public void SleepReleased()
