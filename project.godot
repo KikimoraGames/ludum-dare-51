@@ -88,6 +88,7 @@ PlayerBonemass="*res://game/player/PlayerBonemass.cs"
 
 window/size/width=640
 window/size/height=480
+window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 

@@ -39,6 +39,7 @@ current = true
 script = ExtResource( 4 )
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
+visible = false
 
 [node name="GroundTileMap" type="TileMap" parent="."]
 z_index = -1

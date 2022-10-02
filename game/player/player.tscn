@@ -37,16 +37,16 @@ DashPowerCost = 1.25
 BlockPlacementDistanceSpeedEaseCurve = SubResource( 23 )
 boneblockScene = ExtResource( 3 )
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1.5, -19.5 )
+shape = SubResource( 20 )
+
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -24 )
 texture = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2dhbWUvcGxheWVyL3BsYXllcl9kdW5nZW9uLmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1UcnVlCm9fZm9sZGVyfD0Kb19uYW1lfD0Kb25seV92aXNpYmxlfD1UcnVlCm9fZXhfcHw9Cg=="
 }
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -1.5, -19.5 )
-shape = SubResource( 20 )
 
 [node name="BarkEffect" type="Label" parent="."]
 visible = false
