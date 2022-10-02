@@ -5,15 +5,19 @@ namespace Game
 {
     public class SpriteHolder : Node2D
     {
+        [Export]
+        private float flipSeconds = 0.15f;
 
-        private void OnDirectionChange(float dir)
+        public void OnDirectionChange(float dir)
         {
-            var scale = Scale;
-            if (Mathf.Sign(scale.x) != dir)
-                scale.x = dir;
+            if (Mathf.IsZeroApprox(dir))
+                return;
+            if (Mathf.Sign(Scale.x) == dir)
+                return;
 
+            var scale = new Vector2(dir, 1f);
             var tween = CreateTween();
-            tween.TweenProperty(this, "scale", scale, 0.15f).SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.Out);
+            tween.TweenProperty(this, "scale", scale, flipSeconds).SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.Out);
         }
     }
 }

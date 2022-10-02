@@ -10,7 +10,10 @@ namespace Game
         private float MovementSpeedPixelsPerSecond = 200;
         [Export]
         private float StunForSeconds = 1.5f;
-        [OnReadyGet("Sprite")]
+        [OnReadyGet("SpriteHolder")]
+        private SpriteHolder spriteHolder;
+
+        [OnReadyGet("SpriteHolder/Sprite")]
         private Sprite sprite;
 
 
@@ -24,23 +27,9 @@ namespace Game
         private float currentTrackFollowMovementSpeed;
         private Player player;
 
-        public string State()
-        {
-            var s = "";
-            if (IsZapping)
-                s += " ZAP";
-            if (IsTrackingPlayer)
-                s += " TRACK";
-            if (IsReturningToPatrol)
-                s += " PATROL";
-            if (!IsTrackingPlayer && !IsReturningToPatrol)
-                s += " FOLLOW";
-            return s;
-        }
         public override void _Process(float delta)
         {
             base._Process(delta);
-            GD.Print(State());
             if (IsZapping)
                 return;
 
@@ -49,6 +38,7 @@ namespace Game
                 if (player == null || !player.IsStunned)
                 {
                     var dir = GlobalPosition.DirectionTo(player.GlobalPosition);
+                    spriteHolder.OnDirectionChange(Mathf.Sign(dir.x));
                     GlobalPosition += dir * MovementSpeedPixelsPerSecond * delta;
                     return;
                 }
@@ -63,6 +53,7 @@ namespace Game
                 if (player == null || player.IsStunned)
                 {
                     var dir = GlobalPosition.DirectionTo(globalPositionWhenPlayerTrackingStarted);
+                    spriteHolder.OnDirectionChange(Mathf.Sign(dir.x));
                     GlobalPosition += dir * MovementSpeedPixelsPerSecond * delta;
                     IsReturningToPatrol = GlobalPosition.DistanceSquaredTo(globalPositionWhenPlayerTrackingStarted) > 5f;
                     return;
@@ -81,7 +72,10 @@ namespace Game
         {
             Offset += currentTrackFollowMovementSpeed * delta;
             if (UnitOffset >= 1.0f || Mathf.IsZeroApprox(UnitOffset))
+            {
                 currentTrackFollowMovementSpeed *= -1;
+                spriteHolder.OnDirectionChange(Mathf.Sign(currentTrackFollowMovementSpeed));
+            }
         }
 
         public void BodyEnteredDetectionArea(PhysicsBody2D b)
