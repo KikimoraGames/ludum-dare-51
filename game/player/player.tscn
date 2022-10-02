@@ -1,10 +1,15 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://game/player/player_static.png" type="Texture" id=1]
 [ext_resource path="res://game/player/Player.cs" type="Script" id=2]
 [ext_resource path="res://game/boneblock/boneblock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/tiles/goop.png" type="Texture" id=4]
-[ext_resource path="res://game/goop_tracker.tscn" type="PackedScene" id=5]
+[ext_resource path="res://game/player/goop/goop_tracker.tscn" type="PackedScene" id=5]
+[ext_resource path="res://game/player/goop/goop_solid_3.tscn" type="PackedScene" id=6]
+[ext_resource path="res://game/player/goop/GoopSolidsEmitter.cs" type="Script" id=7]
+[ext_resource path="res://game/player/goop/goop_solid_1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://game/player/goop/goop_solid_2.tscn" type="PackedScene" id=9]
+[ext_resource path="res://game/player/goop/goop_solid_4.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Curve" id=21]
 _data = [ Vector2( 0, 0.99 ), 0.0, -2.7, 0, 0, Vector2( 1, 0 ), 0.1, 0.0, 0, 0 ]
@@ -88,3 +93,9 @@ texture = ExtResource( 4 )
 
 [node name="GoopTracker" parent="." instance=ExtResource( 5 )]
 PlayerPath = NodePath("..")
+
+[node name="GoopSolidsEmitter" type="Node" parent="."]
+script = ExtResource( 7 )
+EmitEveryPowerLoss = 1.0
+PlayerPath = NodePath("..")
+goopSolidScenes = [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 10 ) ]

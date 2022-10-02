@@ -58,6 +58,8 @@ namespace Game
         private GoopTracker goopTracker;
         [OnReadyGet("GoopParticles")]
         private Particles2D goopParticles;
+        [OnReadyGet("GoopSolidsEmitter")]
+        private GoopSolidsEmitter goopSolidsEmitter;
 
         public bool IsJumpButtonHeld { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
@@ -172,6 +174,7 @@ namespace Game
             var dashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection);
             dashDirection = DirectionClamp(dashDirection);
             DashDirection = dashDirection.Normalized();
+            goopSolidsEmitter.EmitSolid(10);
         }
 
         public void SleepReleased()
