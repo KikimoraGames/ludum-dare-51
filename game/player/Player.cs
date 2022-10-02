@@ -9,8 +9,15 @@ namespace Game
         private const string ACTION_JUMP = "action_jump";
         private const uint PLATFORM_PHYSICS_LAYER = 1u << 30;
 
+        [Signal]
+        public delegate void on_horizontal_direction_change(float dir);
+
         [Export]
         public float MovementSpeedPixelsPerSecond { get; private set; } = 250;
+        [Export]
+        public Curve MovementHorizontalSpeedEaseCurve { get; private set; }
+        [Export]
+        public float MovemementHorizontalMaxHoldSeconds { get; private set; } = 0.1f;
         [Export]
         public float JumpSpeedPixelsPerSecond { get; private set; } = 800f;
         [Export]
@@ -221,11 +228,25 @@ namespace Game
             timeSpentFalling = 0f;
         }
 
+        private float previousHorizontalInputDirection;
+        private float secondsInCurrentHorizontalDirection;
+
         public override void _PhysicsProcess(float delta)
         {
             base._PhysicsProcess(delta);
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var horizontalVelocity = Vector2.Right * inputVelocity;
+            var horizontalDirection = Mathf.Sign(horizontalVelocity.x);
+            if (previousHorizontalInputDirection != horizontalDirection && !Mathf.IsZeroApprox(horizontalDirection))
+            {
+                previousHorizontalInputDirection = horizontalDirection;
+                EmitSignal(nameof(on_horizontal_direction_change), previousHorizontalInputDirection);
+                secondsInCurrentHorizontalDirection = 0;
+            }
+            else
+                secondsInCurrentHorizontalDirection += delta;
+
+
             var verticalVelocity = Vector2.Up;
 
             if (IsDashing)
@@ -250,7 +271,7 @@ namespace Game
             }
 
 
-            horizontalVelocity *= MovementSpeedPixelsPerSecond;
+            horizontalVelocity *= MovementSpeedPixelsPerSecond * MovementHorizontalSpeedEaseCurve.Interpolate(secondsInCurrentHorizontalDirection / MovemementHorizontalMaxHoldSeconds);
             if (IsInAir)
                 horizontalVelocity += Vector2.Right * jumpCurrentHorizontalMomentumVelocity;
 
