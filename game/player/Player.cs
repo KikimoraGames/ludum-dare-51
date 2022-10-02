@@ -68,6 +68,9 @@ namespace Game
         [OnReadyGet("GoopSolidsEmitter")]
         private GoopSolidsEmitter goopSolidsEmitter;
 
+        [OnReadyGet("AnimationController")]
+        private AnimationController animationController;
+
         public bool IsJumpButtonHeld { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
         public bool IsInAir { get; private set; } = false;
@@ -108,9 +111,13 @@ namespace Game
             return v.Normalized();
         }
 
+        [OnReady]
+        private void PlayStatic() => animationController.Play("static");
+
         public void JumpPressed()
         {
             var inputVelocity = DirectionClamp(InputProcessor.Instance.InputVelocity);
+            animationController.Play("jump");
             if (inputVelocity.y > 0.5)
             {
                 HandleJumpThroughPlatform();
@@ -178,7 +185,7 @@ namespace Game
             dashDistanceCovered = 0f;
             dashHangTimeCurrent = 0f;
             PlayerPower.Instance.PowerDrainModifier = 0.0f;
-
+            animationController.Play("dash");
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var dashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection);
             dashDirection = DirectionClamp(dashDirection);
@@ -189,6 +196,7 @@ namespace Game
         public void SleepReleased()
         {
             IsSleeping = false;
+            animationController.Play("static");
             PlayerPower.Instance.PowerDrainModifier = 1f;
             goopTracker.SetProcess(true);
             goopParticles.Emitting = true;
@@ -197,6 +205,7 @@ namespace Game
         public void SleepPressed()
         {
             IsSleeping = true;
+            animationController.Play("sit");
             PlayerPower.Instance.PowerDrainModifier = 0f;
             goopTracker.SetProcess(false);
             goopParticles.Emitting = false;
@@ -208,7 +217,9 @@ namespace Game
                 return;
 
             barkEffect.Visible = true;
-            await this.WaitSeconds(0.25f);
+            animationController.Bark();
+            await this.WaitSeconds(0.6f);
+            animationController.BarkDone();
             barkEffect.Visible = false;
         }
 
@@ -216,6 +227,7 @@ namespace Game
         {
             IsPlacingBlock = true;
             blockPlacementDistanceCovered = 0f;
+            animationController.Play("shit");
             var block = boneblockScene.Instance<Boneblock>();
             block.GlobalPosition = GlobalPosition;
             GetParent().AddChild(block);
@@ -228,6 +240,7 @@ namespace Game
             PlayerPower.Instance.Add(-DashPowerCost);
             IsDashing = false;
             timeSpentFalling = 0f;
+            animationController.Play("static");
         }
 
         private float previousHorizontalInputDirection;
@@ -295,8 +308,10 @@ namespace Game
                     isInAirSinceMsec = Time.GetTicksMsec();
             }
 
-            if (isOnFloor)
+            if (isOnFloor && IsInAir)
             {
+                animationController.Play("recovery");
+                animationController.Queue("static");
                 timeSpentFalling = 0f;
                 IsInAir = false;
                 HasDash = true;
@@ -347,7 +362,7 @@ namespace Game
         {
             if (blockPlacementDistanceCovered > BlockPlacementVerticalDistancePixels)
             {
-                IsPlacingBlock = false;
+                BlockPlacementDone();
                 return;
             }
 
@@ -357,13 +372,19 @@ namespace Game
             var collision = MoveAndCollide(velocity * delta, infiniteInertia: false, testOnly: true);
             if (collision != null)
             {
-                IsPlacingBlock = false;
+                BlockPlacementDone();
                 return;
             }
 
             MoveAndSlide(velocity, Vector2.Up, false, infiniteInertia: false);
             var newPosition = GlobalPosition;
             blockPlacementDistanceCovered += oldPosition.DistanceTo(newPosition);
+        }
+
+        private void BlockPlacementDone()
+        {
+            IsPlacingBlock = false;
+            animationController.Play("static");
         }
 
         public void Stun(float stunForSeconds)
