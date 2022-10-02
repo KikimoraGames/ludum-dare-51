@@ -54,6 +54,10 @@ namespace Game
 
         [OnReadyGet("BarkEffect")]
         private CanvasItem barkEffect;
+        [OnReadyGet("GoopTracker")]
+        private GoopTracker goopTracker;
+        [OnReadyGet("GoopParticles")]
+        private Particles2D goopParticles;
 
         public bool IsJumpButtonHeld { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
@@ -174,12 +178,16 @@ namespace Game
         {
             IsSleeping = false;
             PlayerPower.Instance.PowerDrainModifier = 1f;
+            goopTracker.SetProcess(true);
+            goopParticles.Emitting = true;
         }
 
         public void SleepPressed()
         {
             IsSleeping = true;
             PlayerPower.Instance.PowerDrainModifier = 0f;
+            goopTracker.SetProcess(false);
+            goopParticles.Emitting = false;
         }
 
         public async void Bark()
