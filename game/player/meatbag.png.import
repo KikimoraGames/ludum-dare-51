@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/player_dungeon.png-d93344200647487452ef8cfd961c8b32.stex"
+path="res://.import/meatbag.png-a7911c353f7c21f9118a8e50e9391c84.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/player/player_dungeon.png"
-dest_files=[ "res://.import/player_dungeon.png-d93344200647487452ef8cfd961c8b32.stex" ]
+source_file="res://game/player/meatbag.png"
+dest_files=[ "res://.import/meatbag.png-a7911c353f7c21f9118a8e50e9391c84.stex" ]
 
 [params]
 
