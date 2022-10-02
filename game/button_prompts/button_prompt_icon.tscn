@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://game/button_prompts/ButtonPromptIcon.cs" type="Script" id=1]
+[ext_resource path="res://game/button_prompts/button_prompt_tileset_ui.tres" type="TileSet" id=2]
+[ext_resource path="res://game/button_prompts/button_prompt_tilemap_ui.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+resource_local_to_scene = true
+atlas = ExtResource( 3 )
+region = Rect2( 80, 224, 16, 16 )
+
+[node name="ButtonPrompt" type="TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 32, 32 )
+texture = SubResource( 1 )
+stretch_mode = 6
+script = ExtResource( 1 )
+Action = "dodge"
+tileset = ExtResource( 2 )

@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://game/button_prompts/button_prompt_tileset_3d.tres" type="TileSet" id=1]
+[ext_resource path="res://game/button_prompts/ButtonPromptSprite3D.cs" type="Script" id=2]
+[ext_resource path="res://game/button_prompts/button_prompt_tilemap_3d.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+resource_local_to_scene = true
+flags = 16
+atlas = ExtResource( 3 )
+region = Rect2( 80, 224, 16, 16 )
+
+[node name="ButtonPrompt" type="Sprite3D"]
+billboard = 1
+texture = SubResource( 1 )
+script = ExtResource( 2 )
+tileset = ExtResource( 1 )
+action = "dodge"
