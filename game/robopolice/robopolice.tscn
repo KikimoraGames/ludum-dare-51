@@ -12,6 +12,9 @@ radius = 125.0
 radius = 35.0
 
 [node name="RoboPolice" type="PathFollow2D"]
+v_offset = 24.0
+rotate = false
+loop = false
 script = ExtResource( 2 )
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]

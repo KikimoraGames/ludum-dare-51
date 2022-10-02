@@ -30,7 +30,5 @@ curve = SubResource( 1 )
 [node name="RoboPolice" parent="Path2D" index="0" instance=ExtResource( 3 )]
 position = Vector2( 312.762, -151.373 )
 offset = 529.136
-v_offset = 24.0
-rotate = false
 loop = false
 lookahead = 10.0
