@@ -13,6 +13,7 @@ namespace Game
         [OnReadyGet]
         private AnimationPlayer body;
 
+        public string CurrentAnimation => body.CurrentAnimation;
 
         public void Play(string animation)
         {

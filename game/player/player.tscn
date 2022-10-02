@@ -800,6 +800,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=40]
 length = 0.1
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Meatbag:texture")
 tracks/0/interp = 1
@@ -1813,6 +1814,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=54]
 length = 0.1
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body:texture")
 tracks/0/interp = 1
@@ -2826,6 +2828,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=68]
 length = 0.1
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Head:texture")
 tracks/0/interp = 1

@@ -301,6 +301,20 @@ namespace Game
                 horizontalVelocity = Vector2.Zero;
             lastFrameVelocity = MoveAndSlide(horizontalVelocity + verticalVelocity, Vector2.Up, true, infiniteInertia: false);
             var isOnFloor = IsOnFloor();
+            if (isOnFloor && !IsInAir && !IsStunned)
+            {
+                if (horizontalVelocity.LengthSquared() > 0.1f)
+                {
+                    if (animationController.CurrentAnimation != "walk")
+                        animationController.Play("walk");
+                }
+                else
+                {
+                    if (animationController.CurrentAnimation != "static")
+                        animationController.Play("static");
+                }
+            }
+
             if (!isOnFloor && !IsInAir)
             {
                 IsInAir = true;
@@ -390,6 +404,7 @@ namespace Game
         public void Stun(float stunForSeconds)
         {
 
+            animationController.Play("stun");
             IsStunned = true;
             stunnedForSeconds = stunForSeconds;
             IsDashing = false;
