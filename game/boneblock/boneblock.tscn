@@ -63,7 +63,7 @@ extents = Vector2( 24, 4 )
 [node name="Boneblock" type="RigidBody2D"]
 z_index = -1
 collision_layer = 2
-collision_mask = 2147483650
+collision_mask = 3221225474
 mass = 20.0
 script = ExtResource( 2 )
 
@@ -84,7 +84,7 @@ position = Vector2( 0, -24 )
 shape = SubResource( 2 )
 
 [node name="Platform" type="RigidBody2D" parent="."]
-collision_layer = 2147483648
+collision_layer = 1073741824
 collision_mask = 0
 mode = 1
 

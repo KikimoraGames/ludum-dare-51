@@ -45,6 +45,13 @@ namespace Game
             }
         }
 
+        public override void _ExitTree()
+        {
+            base._ExitTree();
+            EmitSignal(nameof(completed), false);
+            QueueFree();
+        }
+
         public override void _Process(float _) => Tick();
 
 

@@ -6,7 +6,8 @@ namespace Game
 {
     public partial class Player : KinematicBody2D
     {
-        private static string ACTION_JUMP = "action_jump";
+        private const string ACTION_JUMP = "action_jump";
+        private const uint PLATFORM_PHYSICS_LAYER = 1u << 30;
 
         [Export]
         public float MovementSpeedPixelsPerSecond { get; private set; } = 250;
@@ -59,6 +60,8 @@ namespace Game
         public bool IsInAir { get; private set; } = false;
         public bool HasDash { get; private set; } = true;
         public bool IsPlacingBlock { get; private set; } = false;
+        public bool IsFallingThrough { get; private set; } = false;
+
         public bool HasPowerForDash => PlayerPower.Instance.CurrentPower >= DashPowerCost;
         public bool HasBonesForBlock => PlayerBonemass.Instance.CurrentBones >= BlockBoneCost;
 
@@ -84,14 +87,66 @@ namespace Game
         public bool IsSleeping { get; private set; } = false;
         private Vector2 lastFrameVelocity;
 
+        private static Vector2 DirectionClamp(Vector2 v)
+        {
+            v = Mathf.Abs(v.x) > Mathf.Abs(v.y) ? new Vector2(v.x, 0) : new Vector2(0, v.y);
+            return v.Normalized();
+        }
+
         public void JumpPressed()
         {
+            var inputVelocity = DirectionClamp(InputProcessor.Instance.InputVelocity);
+            if (inputVelocity.y > 0.5)
+            {
+                HandleJumpThroughPlatform();
+                return;
+            }
             IsJumping = true;
             IsJumpButtonHeld = true;
             jumpHangTimeCurrent = 0f;
             jumpHeldSinceMsec = Time.GetTicksMsec();
             jumpStartHorizontalMomentumVelocity = lastFrameVelocity.x;
             jumpCurrentHorizontalMomentumVelocity = jumpStartHorizontalMomentumVelocity;
+        }
+
+        private async void HandleJumpThroughPlatform()
+        {
+            if (IsFallingThrough)
+                return;
+
+            var world = GetWorld2d();
+            var collision = world.DirectSpaceState.IntersectRay(GlobalPosition, GlobalPosition + Vector2.Down * 50, collisionLayer: PLATFORM_PHYSICS_LAYER);
+            if (collision.Count <= 0)
+                return;
+
+            var intersectionPoint = (Vector2)collision["position"];
+            var normal = (Vector2)collision["normal"];
+            uint oldMask = CollisionMask;
+            var newMask = oldMask & ~(PLATFORM_PHYSICS_LAYER);
+
+            CollisionMask = newMask;
+            var tree = GetTree();
+            IsFallingThrough = true;
+            var count = 0;
+            while (count < 5)
+            {
+                count++;
+                await this.WaitFrames(1, FrameWaiter.PROCESS.PHYSICS);
+                if (!IsInsideTree())
+                    break;
+
+                var check = world.DirectSpaceState.IntersectRay(GlobalPosition, intersectionPoint, collisionLayer: PLATFORM_PHYSICS_LAYER);
+                if (check.Count <= 0)
+                    break;
+
+                var newNormal = (Vector2)check["normal"];
+                var newIntersection = (Vector2)check["position"];
+
+                if (!newNormal.IsEqualApprox(Vector2.Zero) && (Mathf.Sign(newNormal.y) != Mathf.Sign(normal.y)))
+                    break;
+            }
+            CollisionMask = oldMask;
+            IsFallingThrough = false;
         }
 
         public void JumpReleased()
@@ -110,8 +165,8 @@ namespace Game
             PlayerPower.Instance.PowerDrainModifier = 0.0f;
 
             var inputVelocity = InputProcessor.Instance.InputVelocity;
-            var dashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection).Normalized();
-            dashDirection = Mathf.Abs(dashDirection.x) > Mathf.Abs(dashDirection.y) ? new Vector2(dashDirection.x, 0) : new Vector2(0, dashDirection.y);
+            var dashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection);
+            dashDirection = DirectionClamp(dashDirection);
             DashDirection = dashDirection.Normalized();
         }
 

@@ -186,7 +186,8 @@ action_bark={
 
 2d_physics/layer_1="player_body"
 2d_physics/layer_2="boneblock"
-2d_physics/layer_32="ground"
+2d_physics/layer_31="platform"
+2d_physics/layer_32="static_ground"
 
 [mono]
 
