@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game/Main.cs" type="Script" id=1]
 [ext_resource path="res://game/player/player.tscn" type="PackedScene" id=2]
@@ -11,10 +11,6 @@
 [ext_resource path="res://game/pickups/power_pickup.tscn" type="PackedScene" id=9]
 [ext_resource path="res://game/ui/ingame_ui.tscn" type="PackedScene" id=10]
 [ext_resource path="res://game/boneblock/boneblock.tscn" type="PackedScene" id=11]
-
-[sub_resource type="Curve" id=1]
-min_value = 0.1
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.1 ), -3.0, 0.0, 0, 0 ]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -44,7 +40,6 @@ current = true
 script = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-BlockPlacementDistanceSpeedEaseCurve = SubResource( 1 )
 
 [node name="PlatformTileMap" type="TileMap" parent="."]
 z_index = -1
@@ -82,10 +77,10 @@ position = Vector2( -128, 64 )
 position = Vector2( 128, -64 )
 
 [node name="BoneBlock" parent="." instance=ExtResource( 11 )]
-position = Vector2( -160, 56 )
+position = Vector2( -160, 64 )
 
 [node name="BoneBlock2" parent="." instance=ExtResource( 11 )]
-position = Vector2( -160, 8 )
+position = Vector2( -160, 16 )
 
 [node name="BoneBlock3" parent="." instance=ExtResource( 11 )]
 position = Vector2( 88, 192 )
