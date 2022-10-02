@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/autotile_template_3x3_minimal.png-7a04c3ce2cacb76d44e7d49a348054fc.stex"
+path="res://.import/ground_tile_placeholder.png-205ad72a4017d9afaac45727772520a7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/tiles/autotile_template_3x3_minimal.png"
-dest_files=[ "res://.import/autotile_template_3x3_minimal.png-7a04c3ce2cacb76d44e7d49a348054fc.stex" ]
+source_file="res://game/tiles/ground_tile_placeholder.png"
+dest_files=[ "res://.import/ground_tile_placeholder.png-205ad72a4017d9afaac45727772520a7.stex" ]
 
 [params]
 

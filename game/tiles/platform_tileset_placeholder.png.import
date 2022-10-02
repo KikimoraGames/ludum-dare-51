@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/autotile_template_2x2.png-7a5458c584f65854e5d999cb05f1ddcd.stex"
+path="res://.import/platform_tileset_placeholder.png-464d9ee54b3e99783a030c7359640bcb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/tiles/autotile_template_2x2.png"
-dest_files=[ "res://.import/autotile_template_2x2.png-7a5458c584f65854e5d999cb05f1ddcd.stex" ]
+source_file="res://game/tiles/platform_tileset_placeholder.png"
+dest_files=[ "res://.import/platform_tileset_placeholder.png-464d9ee54b3e99783a030c7359640bcb.stex" ]
 
 [params]
 

@@ -75,7 +75,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ldjam51"
-run/main_scene="res://game/main.tscn"
+run/main_scene="res://game/main_level.tscn"
 config/icon="res://icon.png"
 
 [autoload]
