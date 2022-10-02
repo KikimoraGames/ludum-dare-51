@@ -39,6 +39,9 @@ namespace Game
             if (e.IsEcho())
                 return;
 
+            if (Player.IsStunned)
+                return;
+
             if (e.IsActionPressed(ACTION_BARK))
             {
                 GetTree().SetInputAsHandled();

@@ -98,7 +98,9 @@ namespace Game
         private float blockPlacementDistanceCovered = 0f;
 
         public bool IsSleeping { get; private set; } = false;
+        public bool IsStunned { get; private set; } = false;
         private Vector2 lastFrameVelocity;
+        private float stunnedForSeconds = 0f;
 
         private static Vector2 DirectionClamp(Vector2 v)
         {
@@ -234,6 +236,13 @@ namespace Game
         public override void _PhysicsProcess(float delta)
         {
             base._PhysicsProcess(delta);
+            if (IsStunned)
+            {
+                stunnedForSeconds -= delta;
+                if (stunnedForSeconds < 0)
+                    IsStunned = false;
+            }
+
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var horizontalVelocity = Vector2.Right * inputVelocity;
             var horizontalDirection = Mathf.Sign(horizontalVelocity.x);
@@ -275,6 +284,8 @@ namespace Game
             if (IsInAir)
                 horizontalVelocity += Vector2.Right * jumpCurrentHorizontalMomentumVelocity;
 
+            if (IsStunned)
+                horizontalVelocity = Vector2.Zero;
             lastFrameVelocity = MoveAndSlide(horizontalVelocity + verticalVelocity, Vector2.Up, true, infiniteInertia: false);
             var isOnFloor = IsOnFloor();
             if (!isOnFloor && !IsInAir)
@@ -353,6 +364,16 @@ namespace Game
             MoveAndSlide(velocity, Vector2.Up, false, infiniteInertia: false);
             var newPosition = GlobalPosition;
             blockPlacementDistanceCovered += oldPosition.DistanceTo(newPosition);
+        }
+
+        public void Stun(float stunForSeconds)
+        {
+
+            IsStunned = true;
+            stunnedForSeconds = stunForSeconds;
+            IsDashing = false;
+            IsJumping = false;
+            IsPlacingBlock = false;
         }
     }
 }

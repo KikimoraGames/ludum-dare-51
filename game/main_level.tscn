@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://game/level_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/pickups/power_pickup.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game/robopolice/robopolice.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -216.035, -169.379, 0, 0, 0, 0, 62.9655, -176.379, 0, 0, 0, 0, 127.651, -169.687, 0, 0, 0, 0, 312.965, -175.379 )
+}
 
 [node name="Main" instance=ExtResource( 1 )]
 
@@ -16,3 +22,15 @@ position = Vector2( 288, 75 )
 
 [node name="PowerPickup2" parent="." index="9" instance=ExtResource( 2 )]
 position = Vector2( -288, 80 )
+
+[node name="Path2D" type="Path2D" parent="." index="10"]
+position = Vector2( -59, 121 )
+curve = SubResource( 1 )
+
+[node name="RoboPolice" parent="Path2D" index="0" instance=ExtResource( 3 )]
+position = Vector2( 312.762, -151.373 )
+offset = 529.136
+v_offset = 24.0
+rotate = false
+loop = false
+lookahead = 10.0
