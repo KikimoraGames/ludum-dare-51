@@ -39,11 +39,19 @@ namespace Game
             if (e.IsEcho())
                 return;
 
-
+            if (e.IsActionPressed(ACTION_BARK))
+            {
+                GetTree().SetInputAsHandled();
+                Player.Bark();
+                return;
+            }
 
             if (e.IsActionPressed(ACTION_JUMP))
             {
                 GetTree().SetInputAsHandled();
+                if (Player.IsPlacingBlock)
+                    return;
+
                 if (Player.IsInAir && Player.CoyoteTime > 1.0f)
                 {
                     if (Player.HasDash && Player.HasPowerForDash)
@@ -67,6 +75,8 @@ namespace Game
                 GetTree().SetInputAsHandled();
                 if (Player.IsInAir)
                     return;
+                if (Player.IsPlacingBlock)
+                    return;
 
                 if (Player.IsSleeping)
                 {
@@ -81,10 +91,20 @@ namespace Game
                 return;
             }
 
-            if (e.IsActionPressed(ACTION_BARK))
+
+            if (e.IsActionPressed(ACTION_BLOCK))
             {
                 GetTree().SetInputAsHandled();
-                Player.Bark();
+                if (Player.IsInAir)
+                    return;
+                if (Player.IsSleeping)
+                    return;
+                if (Player.IsPlacingBlock)
+                    return;
+                if (!Player.HasBonesForBlock)
+                    return;
+
+                Player.BlockPressed();
                 return;
             }
         }

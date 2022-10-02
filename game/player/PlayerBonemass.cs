@@ -28,5 +28,11 @@ namespace Game
             EmitSignal(nameof(on_bones_changed), CurrentBones);
             EmitSignal(nameof(on_humans_changed), CurrentHumans);
         }
+
+        public void SpendBones(int b)
+        {
+            CurrentBones = Mathf.Clamp(CurrentBones - b, 0, MaximumBones);
+            EmitSignal(nameof(on_bones_changed), CurrentBones);
+        }
     }
 }

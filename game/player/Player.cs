@@ -11,7 +11,7 @@ namespace Game
         [Export]
         public float MovementSpeedPixelsPerSecond { get; private set; } = 250;
         [Export]
-        public float JumpSpeedPixelsPerSecond { get; private set; } = 500f;
+        public float JumpSpeedPixelsPerSecond { get; private set; } = 800f;
         [Export]
         public float JumpHangTimeSeconds { get; private set; } = 0.1f;
         [Export]
@@ -40,6 +40,16 @@ namespace Game
         public float CoyoteTimeSeconds { get; private set; } = 0.2f;
         [Export]
         public float DashPowerCost { get; private set; } = 1f;
+        [Export]
+        private PackedScene boneblockScene;
+        [Export]
+        public int BlockBoneCost { get; private set; } = 1;
+        [Export]
+        public float BlockPlacementVerticalDistancePixels { get; private set; } = 64;
+        [Export]
+        public float BlockPlacementVerticalMaxSpeedPixelsPerSecond { get; private set; } = 500;
+        [Export]
+        public Curve BlockPlacementDistanceSpeedEaseCurve { get; private set; }
 
         [OnReadyGet("BarkEffect")]
         private CanvasItem barkEffect;
@@ -48,7 +58,10 @@ namespace Game
         public bool IsJumping { get; private set; } = false;
         public bool IsInAir { get; private set; } = false;
         public bool HasDash { get; private set; } = true;
+        public bool IsPlacingBlock { get; private set; } = false;
         public bool HasPowerForDash => PlayerPower.Instance.CurrentPower >= DashPowerCost;
+        public bool HasBonesForBlock => PlayerBonemass.Instance.CurrentBones >= BlockBoneCost;
+
         public bool IsDashing { get; private set; } = false;
         public Vector2 DashDirection { get; private set; } = Vector2.Zero;
 
@@ -65,6 +78,8 @@ namespace Game
 
         private float dashDistanceCovered = 0f;
         private float dashHangTimeCurrent = 0f;
+
+        private float blockPlacementDistanceCovered = 0f;
 
         public bool IsSleeping { get; private set; } = false;
         private Vector2 lastFrameVelocity;
@@ -100,6 +115,38 @@ namespace Game
             DashDirection = dashDirection.Normalized();
         }
 
+        public void SleepReleased()
+        {
+            IsSleeping = false;
+            PlayerPower.Instance.PowerDrainModifier = 1f;
+        }
+
+        public void SleepPressed()
+        {
+            IsSleeping = true;
+            PlayerPower.Instance.PowerDrainModifier = 0f;
+        }
+
+        public async void Bark()
+        {
+            if (barkEffect.Visible)
+                return;
+
+            barkEffect.Visible = true;
+            await this.WaitSeconds(0.25f);
+            barkEffect.Visible = false;
+        }
+
+        public void BlockPressed()
+        {
+            IsPlacingBlock = true;
+            blockPlacementDistanceCovered = 0f;
+            var block = boneblockScene.Instance<Boneblock>();
+            block.GlobalPosition = GlobalPosition;
+            GetParent().AddChild(block);
+            PlayerBonemass.Instance.SpendBones(BlockBoneCost);
+        }
+
         private void DashDone()
         {
             PlayerPower.Instance.PowerDrainModifier = 1.0f;
@@ -118,6 +165,12 @@ namespace Game
             if (IsDashing)
             {
                 HandleDashing(delta);
+                return;
+            }
+
+            if (IsPlacingBlock)
+            {
+                HandlePlacingBlock(delta);
                 return;
             }
 
@@ -190,29 +243,29 @@ namespace Game
             MoveAndSlide(dashVelocity, Vector2.Up, false, infiniteInertia: false);
             var newPosition = GlobalPosition;
             dashDistanceCovered += oldPosition.DistanceTo(newPosition);
-            return;
         }
 
-        public void SleepReleased()
+        private void HandlePlacingBlock(float delta)
         {
-            IsSleeping = false;
-            PlayerPower.Instance.PowerDrainModifier = 1f;
-        }
-
-        public void SleepPressed()
-        {
-            IsSleeping = true;
-            PlayerPower.Instance.PowerDrainModifier = 0f;
-        }
-
-        public async void Bark()
-        {
-            if (barkEffect.Visible)
+            if (blockPlacementDistanceCovered > BlockPlacementVerticalDistancePixels)
+            {
+                IsPlacingBlock = false;
                 return;
+            }
 
-            barkEffect.Visible = true;
-            await this.WaitSeconds(0.25f);
-            barkEffect.Visible = false;
+            var oldPosition = GlobalPosition;
+            var velocity = Vector2.Up * BlockPlacementVerticalMaxSpeedPixelsPerSecond * BlockPlacementDistanceSpeedEaseCurve.Interpolate(blockPlacementDistanceCovered / BlockPlacementVerticalDistancePixels);
+
+            var collision = MoveAndCollide(velocity * delta, infiniteInertia: false, testOnly: true);
+            if (collision != null)
+            {
+                IsPlacingBlock = false;
+                return;
+            }
+
+            MoveAndSlide(velocity, Vector2.Up, false, infiniteInertia: false);
+            var newPosition = GlobalPosition;
+            blockPlacementDistanceCovered += oldPosition.DistanceTo(newPosition);
         }
     }
 }
