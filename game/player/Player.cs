@@ -41,6 +41,9 @@ namespace Game
         [Export]
         public float DashPowerCost { get; private set; } = 1f;
 
+        [OnReadyGet("BarkEffect")]
+        private CanvasItem barkEffect;
+
         public bool IsJumpButtonHeld { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
         public bool IsInAir { get; private set; } = false;
@@ -132,7 +135,7 @@ namespace Game
             if (IsInAir)
                 horizontalVelocity += Vector2.Right * jumpCurrentHorizontalMomentumVelocity;
 
-            lastFrameVelocity = MoveAndSlide(horizontalVelocity + verticalVelocity, Vector2.Up, true);
+            lastFrameVelocity = MoveAndSlide(horizontalVelocity + verticalVelocity, Vector2.Up, true, infiniteInertia: false);
             var isOnFloor = IsOnFloor();
             if (!isOnFloor && !IsInAir)
             {
@@ -177,14 +180,14 @@ namespace Game
                 return;
             }
 
-            var collision = MoveAndCollide(dashVelocity * delta, testOnly: true);
+            var collision = MoveAndCollide(dashVelocity * delta, infiniteInertia: false, testOnly: true);
             if (collision != null)
             {
                 dashDistanceCovered += DashDistance;
                 return;
             }
 
-            MoveAndSlide(dashVelocity, Vector2.Up, false);
+            MoveAndSlide(dashVelocity, Vector2.Up, false, infiniteInertia: false);
             var newPosition = GlobalPosition;
             dashDistanceCovered += oldPosition.DistanceTo(newPosition);
             return;
@@ -200,6 +203,16 @@ namespace Game
         {
             IsSleeping = true;
             PlayerPower.Instance.PowerDrainModifier = 0f;
+        }
+
+        public async void Bark()
+        {
+            if (barkEffect.Visible)
+                return;
+
+            barkEffect.Visible = true;
+            await this.WaitSeconds(0.25f);
+            barkEffect.Visible = false;
         }
     }
 }

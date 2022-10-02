@@ -82,6 +82,7 @@ config/icon="res://icon.png"
 
 Events="*res://game/events/Events.cs"
 PlayerPower="*res://game/player/PlayerPower.cs"
+PlayerBonemass="*res://game/player/PlayerBonemass.cs"
 
 [display]
 
@@ -184,6 +185,7 @@ action_bark={
 [layer_names]
 
 2d_physics/layer_1="player_body"
+2d_physics/layer_2="boneblock"
 2d_physics/layer_32="ground"
 
 [mono]

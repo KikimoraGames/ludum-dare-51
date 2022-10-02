@@ -25,6 +25,7 @@ namespace Game
 
             QueueFree();
             PlayerPower.Instance.Add(power);
+            PlayerBonemass.Instance.AddHuman(1);
         }
     }
 }

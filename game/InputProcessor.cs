@@ -8,7 +8,8 @@ namespace Game
     {
         public static string ACTION_JUMP = "action_jump";
         public static string ACTION_SLEEP = "action_sleep";
-
+        public static string ACTION_BLOCK = "action_boneblock";
+        public static string ACTION_BARK = "action_bark";
         [OnReadyGet]
         private Player Player { get; set; }
 
@@ -77,6 +78,13 @@ namespace Game
                     Player.SleepPressed();
                     GameplayCameraStack.Priority = 0;
                 }
+                return;
+            }
+
+            if (e.IsActionPressed(ACTION_BARK))
+            {
+                GetTree().SetInputAsHandled();
+                Player.Bark();
                 return;
             }
         }

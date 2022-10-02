@@ -11,6 +11,7 @@ namespace Game
         private void ConnectToPower()
         {
             PlayerPower.Instance.Connect(nameof(PlayerPower.on_power_changed), this, nameof(OnPowerChanged));
+            OnPowerChanged(PlayerPower.Instance.CurrentPower);
         }
 
         private void OnPowerChanged(float p)
