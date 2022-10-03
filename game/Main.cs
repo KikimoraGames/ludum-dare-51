@@ -58,6 +58,8 @@ namespace Game
             transitionTween = CreateTween();
             transitionTween.TweenProperty(levelTransitionEffectMaterial, "shader_param/radius", 1f, 0.15f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
             currentLoadedLevel = l;
+            await ToSignal(transitionTween, "finished");
+            await this.WaitSeconds(0.5f);
             currentLoadedLevel.Begin();
         }
 

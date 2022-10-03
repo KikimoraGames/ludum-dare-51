@@ -25,10 +25,12 @@ namespace Game
         }
 
         [OnReady]
-        private void Sleep()
+        protected virtual void OnLevelReady()
         {
             InputProcessor.Instance.IgnoreInput = true;
-            InputProcessor.Instance.ForceSleep();
+            PlayerPower.Instance.PowerDrainModifier = 0f;
+            if (this.IsDebugMainScene())
+                Begin();
         }
 
         public void Unload()
@@ -38,6 +40,7 @@ namespace Game
 
         public void Begin()
         {
+            PlayerPower.Instance.PowerDrainModifier = 1f;
             InputProcessor.Instance.IgnoreInput = false;
         }
 

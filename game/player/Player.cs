@@ -298,9 +298,6 @@ namespace Game
         public override void _PhysicsProcess(float delta)
         {
             base._PhysicsProcess(delta);
-            if (IsSleeping)
-                return;
-
             if (IsStunned)
             {
                 stunnedForSeconds -= delta;
@@ -311,6 +308,9 @@ namespace Game
                 }
             }
             else invulnerabilityTime = Mathf.Clamp(invulnerabilityTime, -1f, invulnerabilityTime - delta);
+
+            if (IsSleeping)
+                return;
 
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var horizontalVelocity = Vector2.Right * inputVelocity;
