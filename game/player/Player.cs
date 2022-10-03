@@ -203,7 +203,10 @@ namespace Game
             DashDirection = dashDirection;
             var dashY = Mathf.Sign(dashDirection.y);
             if (!Mathf.IsZeroApprox(dashY))
+            {
                 spriteOffset.Rotation = Mathf.Deg2Rad(90f * dashY);
+                CollisionMask = CollisionMask & ~(PLATFORM_PHYSICS_LAYER);
+            }
             goopSolidsEmitter.EmitSolid(10);
         }
 
@@ -257,6 +260,7 @@ namespace Game
             spriteOffset.Rotation = 0f;
             if (!IsStunned)
                 animationController.Play("down");
+            CollisionMask = CollisionMask | PLATFORM_PHYSICS_LAYER;
         }
 
         private float previousHorizontalInputDirection;
@@ -432,6 +436,7 @@ namespace Game
         private void BlockPlacementDone()
         {
             IsPlacingBlock = false;
+            timeSpentFalling = 0f;
             animationController.Play("static");
         }
 
