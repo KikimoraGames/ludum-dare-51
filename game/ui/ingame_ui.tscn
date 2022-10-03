@@ -81,6 +81,7 @@ margin_right = 635.0
 margin_bottom = 475.0
 
 [node name="Label2" type="Label" parent="MarginContainer/PowerRemaining"]
+self_modulate = Color( 0.890196, 0.831373, 0.980392, 1 )
 anchor_right = 1.0
 margin_bottom = 16.0
 rect_pivot_offset = Vector2( 315, 32 )
@@ -90,7 +91,7 @@ align = 1
 valign = 1
 script = ExtResource( 1 )
 AnimationPlayerPath = NodePath("../AnimationPlayer")
-okColor = Color( 1, 1, 1, 1 )
+okColor = Color( 0.890196, 0.831373, 0.980392, 1 )
 badColor = Color( 0.133333, 0, 0, 1 )
 
 [node name="Panel" type="Panel" parent="MarginContainer/PowerRemaining/Label2"]

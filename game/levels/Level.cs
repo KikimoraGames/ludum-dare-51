@@ -31,7 +31,7 @@ namespace Game
         protected virtual void OnLevelReady()
         {
             InputProcessor.Instance.IgnoreInput = true;
-            PlayerPower.Instance.PowerDrainModifier = 0f;
+            PlayerPower.Instance.LevelOverride = 0f;
             if (this.IsDebugMainScene())
                 Begin();
         }
@@ -43,7 +43,7 @@ namespace Game
 
         public virtual void Begin()
         {
-            PlayerPower.Instance.PowerDrainModifier = 1f;
+            PlayerPower.Instance.LevelOverride = 1f;
             InputProcessor.Instance.IgnoreInput = false;
         }
 
@@ -65,7 +65,7 @@ namespace Game
             EmitSignal(nameof(level_completed));
         }
 
-        private void OnPowerChanged(float p)
+        protected virtual void OnPowerChanged(float p)
         {
             if (isFailEmitted)
                 return;

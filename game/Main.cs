@@ -17,6 +17,8 @@ namespace Game
         private Control levelTransitionEffect;
         [OnReadyGet]
         private Node currentLevelHolder;
+        [OnReadyGet]
+        private Button goodbyeButton;
 
 
         private Level currentLoadedLevel;
@@ -46,7 +48,7 @@ namespace Game
 
 
             var transitionTween = CreateTween();
-            transitionTween.TweenProperty(levelTransitionEffectMaterial, "shader_param/radius", -0.1f, 0.25f).From(1f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
+            transitionTween.TweenProperty(levelTransitionEffectMaterial, "shader_param/radius", -0.1f, 0.25f).From(1.1f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
             await ToSignal(transitionTween, "finished");
 
             if (currentLoadedLevel != null)
@@ -69,7 +71,20 @@ namespace Game
 
         private void OnLevelComplete(int idx)
         {
-            LoadLevel(levels[(idx + 1) % levels.Count], (idx + 1) % levels.Count);
+            if (idx == -2)
+            {
+                Goodbye();
+                return;
+            }
+
+            var nextLevel = idx + 1;
+            if (nextLevel >= levels.Count)
+            {
+                LoadLevel(outroScene, -2);
+                return;
+            }
+
+            LoadLevel(levels[nextLevel], nextLevel);
         }
 
         private void OnLevelFailed(int idx)
@@ -80,5 +95,21 @@ namespace Game
             else
                 LoadLevel(levels[idx], idx);
         }
+
+        private async void Goodbye()
+        {
+            var transitionTween = CreateTween();
+            transitionTween.TweenProperty(levelTransitionEffectMaterial, "shader_param/radius", -0.1f, 2f).From(1.2f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
+            await ToSignal(transitionTween, "finished");
+
+            goodbyeButton.Visible = true;
+            transitionTween = CreateTween();
+            transitionTween.TweenProperty(goodbyeButton, "modulate", new Color(1f, 1f, 1f, 1f), 2f).From(new Color(1f, 1f, 1f, 0f)).SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.Out);
+            await ToSignal(transitionTween, "finished");
+            goodbyeButton.Disabled = false;
+            goodbyeButton.GrabFocus();
+        }
+
+        private void _on_GoodbyeButton_pressed() => GetTree().Quit();
     }
 }

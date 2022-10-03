@@ -9,6 +9,7 @@ namespace Game
         [Signal]
         public delegate void on_power_changed(float power);
 
+        public float LevelOverride { get; set; } = 1.0f;
         public float PowerDrainModifier { get; set; } = 1.0f;
 
         public float CurrentPower { get; private set; } = 10;
@@ -16,7 +17,7 @@ namespace Game
         public override void _Process(float delta)
         {
             base._Process(delta);
-            CurrentPower = Mathf.Clamp(CurrentPower - delta * PowerDrainModifier, 0, MAXIMUM_POWER);
+            CurrentPower = Mathf.Clamp(CurrentPower - delta * PowerDrainModifier * LevelOverride, 0, MAXIMUM_POWER);
             EmitSignal(nameof(on_power_changed), CurrentPower);
             if (Mathf.IsZeroApprox(CurrentPower))
                 SetProcess(false);
@@ -24,7 +25,7 @@ namespace Game
 
         public void Add(float power)
         {
-            CurrentPower = Mathf.Clamp(CurrentPower + power, 0, MAXIMUM_POWER);
+            CurrentPower = Mathf.Clamp(CurrentPower + power * LevelOverride, 0, MAXIMUM_POWER);
             EmitSignal(nameof(on_power_changed), CurrentPower);
         }
     }

@@ -1,15 +1,11 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://game/audio_assets/sfx/jump/jump_sfx.tres" type="Resource" id=1]
 [ext_resource path="res://game/player/Player.cs" type="Script" id=2]
 [ext_resource path="res://game/boneblock/boneblock.tscn" type="PackedScene" id=3]
-[ext_resource path="res://game/tiles/goop.png" type="Texture" id=4]
 [ext_resource path="res://game/player/goop/goop_tracker.tscn" type="PackedScene" id=5]
-[ext_resource path="res://game/player/goop/goop_solid_3.tscn" type="PackedScene" id=6]
 [ext_resource path="res://game/player/goop/GoopSolidsEmitter.cs" type="Script" id=7]
 [ext_resource path="res://game/player/goop/goop_solid_1.tscn" type="PackedScene" id=8]
-[ext_resource path="res://game/player/goop/goop_solid_2.tscn" type="PackedScene" id=9]
-[ext_resource path="res://game/player/goop/goop_solid_4.tscn" type="PackedScene" id=10]
 [ext_resource path="res://game/audio_assets/sfx/bark/bark_sfx.tres" type="Resource" id=11]
 [ext_resource path="res://game/player/PlayerPowerIndicator.cs" type="Script" id=12]
 [ext_resource path="res://game/player/SpriteHolder.cs" type="Script" id=13]
@@ -25,6 +21,7 @@
 [ext_resource path="res://game/audio_assets/sfx/sleep/sleep_enter_sfx.tres" type="Resource" id=23]
 [ext_resource path="res://game/audio_assets/sfx/sleep/sleep_exit_sfx.tres" type="Resource" id=24]
 [ext_resource path="res://game/audio_assets/sfx/boneblock/boneblock_sfx.tres" type="Resource" id=25]
+[ext_resource path="res://game/player/meatball.png" type="Texture" id=26]
 
 [sub_resource type="Curve" id=28]
 _data = [ Vector2( 0, 0.5 ), 0.0, 0.5, 0, 1, Vector2( 1, 1 ), 0.5, 0.0, 1, 0 ]
@@ -3124,7 +3121,6 @@ gravity = Vector3( 0, 98, 0 )
 initial_velocity = 35.34
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale = 4.0
 scale_random = 1.0
 color_ramp = SubResource( 25 )
 
@@ -3181,7 +3177,7 @@ initial_velocity = 100.0
 initial_velocity_random = 0.75
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale = 16.0
+scale = 3.0
 scale_random = 0.25
 scale_curve = SubResource( 84 )
 color = Color( 1, 0.180392, 0.180392, 1 )
@@ -3316,7 +3312,7 @@ lifetime = 0.5
 randomness = 1.0
 local_coords = false
 process_material = SubResource( 26 )
-texture = ExtResource( 4 )
+texture = ExtResource( 26 )
 
 [node name="GoopTracker" parent="." instance=ExtResource( 5 )]
 PlayerPath = NodePath("..")
@@ -3325,7 +3321,7 @@ PlayerPath = NodePath("..")
 script = ExtResource( 7 )
 EmitEveryPowerLoss = 1.0
 PlayerPath = NodePath("..")
-goopSolidScenes = [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 10 ) ]
+goopSolidScenes = [ ExtResource( 8 ) ]
 
 [node name="PlayerPowerIndicator" type="Node" parent="."]
 script = ExtResource( 12 )
@@ -3348,6 +3344,7 @@ randomness = 0.43
 visibility_rect = Rect2( -223.051, -161.276, 438.529, 314.706 )
 local_coords = false
 process_material = SubResource( 79 )
+texture = ExtResource( 26 )
 
 [node name="HumanEatenParticles" type="Particles2D" parent="."]
 position = Vector2( 0, -19 )
@@ -3360,5 +3357,6 @@ explosiveness = 1.0
 randomness = 0.27
 local_coords = false
 process_material = SubResource( 80 )
+texture = ExtResource( 26 )
 
 [connection signal="on_horizontal_direction_change" from="." to="SpriteHolder" method="OnDirectionChange"]

@@ -25,7 +25,7 @@ namespace Game
         protected async override void OnHumanDestroyed()
         {
             billboardCamera.Set("priority", 12);
-            PlayerPower.Instance.PowerDrainModifier = 0f;
+            PlayerPower.Instance.LevelOverride = 0f;
             await this.WaitSeconds(5f);
             title.Visible = true;
             var tween = CreateTween();

@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game/Main.cs" type="Script" id=1]
 [ext_resource path="res://game/levels/test_level2.tscn" type="PackedScene" id=2]
-[ext_resource path="res://game/levels/test_level.tscn" type="PackedScene" id=3]
-[ext_resource path="res://game/levels/test_level3.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/audio_assets/robopup_edit_3_normalized_loopable_mp3.mp3" type="AudioStream" id=5]
 [ext_resource path="res://game/levels/intro_level/intro_level.tscn" type="PackedScene" id=6]
+[ext_resource path="res://game/levels/outro_level/outro_level.tscn" type="PackedScene" id=7]
+[ext_resource path="res://game/font.ttf" type="DynamicFontData" id=8]
 
 [sub_resource type="Shader" id=1]
 code = "// NOTE: Shader automatically converted from Godot Engine 3.5.1.stable.mono's CanvasItemMaterial.
@@ -41,12 +41,18 @@ colors = PoolColorArray( 0, 0, 0, 1 )
 [sub_resource type="GradientTexture" id=4]
 gradient = SubResource( 3 )
 
+[sub_resource type="DynamicFont" id=5]
+size = 64
+font_data = ExtResource( 8 )
+
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
 LevelTransitionEffectPath = NodePath("LevelTransitionLayer/LevelTransitionEffect")
 CurrentLevelHolderPath = NodePath("CurrentLevel")
+GoodbyeButtonPath = NodePath("LevelTransitionLayer/GoodbyeButton")
 introScene = ExtResource( 6 )
-levels = [ ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]
+outroScene = ExtResource( 7 )
+levels = [ ExtResource( 2 ) ]
 
 [node name="LevelTransitionLayer" type="CanvasLayer" parent="."]
 layer = 127
@@ -59,9 +65,25 @@ texture = SubResource( 4 )
 expand = true
 stretch_mode = 1
 
+[node name="GoodbyeButton" type="Button" parent="LevelTransitionLayer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -132.0
+margin_top = -35.0
+margin_right = 132.0
+margin_bottom = 35.0
+custom_fonts/font = SubResource( 5 )
+disabled = true
+text = "GOODNIGHT"
+
 [node name="CurrentLevel" type="Node" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 autoplay = true
 bus = "Music"
+
+[connection signal="pressed" from="LevelTransitionLayer/GoodbyeButton" to="." method="_on_GoodbyeButton_pressed"]
