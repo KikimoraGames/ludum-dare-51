@@ -38,7 +38,7 @@ transition_time = 0.5
 [node name="ZoomCamera" type="Node2D" parent="ZoomCameraStack" groups=["vcamera"]]
 script = ExtResource( 8 )
 transition_time = 5.0
-zoom = Vector2( 3, 3 )
+zoom = Vector2( 1.5, 1.5 )
 
 [node name="InputProcessor" type="Node" parent="."]
 script = ExtResource( 7 )

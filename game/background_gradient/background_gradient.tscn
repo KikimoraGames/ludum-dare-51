@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://game/background_gradient/gradient.png" type="Texture" id=1]
+[ext_resource path="res://game/background_gradient/gradient2.png" type="Texture" id=1]
 
 [node name="BackgroundGradient" type="CanvasLayer"]
 layer = -10

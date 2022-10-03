@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/robopup_edit_3_normalized_loopable_mp3.mp3-7b248e4e3f5c3a473060b6ec89850c18.mp3str"
+
+[deps]
+
+source_file="res://game/audio_assets/robopup_edit_3_normalized_loopable_mp3.mp3"
+dest_files=[ "res://.import/robopup_edit_3_normalized_loopable_mp3.mp3-7b248e4e3f5c3a473060b6ec89850c18.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
