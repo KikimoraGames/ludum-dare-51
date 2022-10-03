@@ -1,5 +1,6 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=84 format=2]
 
+[ext_resource path="res://game/audio_assets/sfx/jump/jump_sfx.tres" type="Resource" id=1]
 [ext_resource path="res://game/player/Player.cs" type="Script" id=2]
 [ext_resource path="res://game/boneblock/boneblock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/tiles/goop.png" type="Texture" id=4]
@@ -9,12 +10,18 @@
 [ext_resource path="res://game/player/goop/goop_solid_1.tscn" type="PackedScene" id=8]
 [ext_resource path="res://game/player/goop/goop_solid_2.tscn" type="PackedScene" id=9]
 [ext_resource path="res://game/player/goop/goop_solid_4.tscn" type="PackedScene" id=10]
+[ext_resource path="res://game/audio_assets/sfx/bark/bark_sfx.tres" type="Resource" id=11]
 [ext_resource path="res://game/player/PlayerPowerIndicator.cs" type="Script" id=12]
 [ext_resource path="res://game/player/SpriteHolder.cs" type="Script" id=13]
 [ext_resource path="res://game/player/AnimationController.cs" type="Script" id=14]
 [ext_resource path="res://game/player/meatbag.png" type="Texture" id=15]
+[ext_resource path="res://game/audio_assets/sfx/footsteps/footsteps_sfx.tres" type="Resource" id=16]
 [ext_resource path="res://game/player/body.png" type="Texture" id=17]
+[ext_resource path="res://game/audio_assets/sfx/land/land_hard_sfx.tres" type="Resource" id=18]
 [ext_resource path="res://game/player/head.png" type="Texture" id=19]
+[ext_resource path="res://game/audio_assets/sfx/dash/dash_sfx.tres" type="Resource" id=20]
+[ext_resource path="res://game/audio_assets/sfx/land/land_soft_sfx.tres" type="Resource" id=21]
+[ext_resource path="res://game/audio_assets/sfx/land/land_softest_sfx.tres" type="Resource" id=22]
 
 [sub_resource type="Curve" id=28]
 _data = [ Vector2( 0, 0.5 ), 0.0, 0.5, 0, 1, Vector2( 1, 1 ), 0.5, 0.0, 1, 0 ]
@@ -2068,6 +2075,23 @@ tracks/4/keys = {
 "update": 1,
 "values": [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0 ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("../..")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.10355, 0.304213 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "FootstepSFX"
+}, {
+"args": [  ],
+"method": "FootstepSFX"
+} ]
+}
 
 [sub_resource type="Animation" id=72]
 resource_name = "RESET"
@@ -3144,6 +3168,13 @@ DashSpeedPixelsPerSecond = 1500.0
 DashPowerCost = 1.25
 BlockPlacementDistanceSpeedEaseCurve = SubResource( 23 )
 boneblockScene = ExtResource( 3 )
+footstepsSFX = ExtResource( 16 )
+barkSFX = ExtResource( 11 )
+jumpSFX = ExtResource( 1 )
+landHardSFX = ExtResource( 18 )
+landSoftSFX = ExtResource( 21 )
+landSoftestSFX = ExtResource( 22 )
+dashSFX = ExtResource( 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.5, -19.5 )

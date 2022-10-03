@@ -63,6 +63,21 @@ namespace Game
         [Export]
         public Curve BlockPlacementDistanceSpeedEaseCurve { get; private set; }
 
+        [Export]
+        public RandomSFXContainer footstepsSFX;
+        [Export]
+        public RandomSFXContainer barkSFX;
+        [Export]
+        public RandomSFXContainer jumpSFX;
+        [Export]
+        public RandomSFXContainer landHardSFX;
+        [Export]
+        public RandomSFXContainer landSoftSFX;
+        [Export]
+        public RandomSFXContainer landSoftestSFX;
+        [Export]
+        public RandomSFXContainer dashSFX;
+
         [OnReadyGet("SpriteHolder/SpriteOffset")]
         private Node2D spriteOffset;
         [OnReadyGet("BarkEffect")]
@@ -132,6 +147,7 @@ namespace Game
                 HandleJumpThroughPlatform();
                 return;
             }
+            Events.PlaySFX(jumpSFX);
             animationController.Play("up");
             IsJumping = true;
             IsJumpButtonHeld = true;
@@ -202,6 +218,7 @@ namespace Game
             dashDirection = DirectionClamp(dashDirection);
             DashDirection = dashDirection;
             var dashY = Mathf.Sign(dashDirection.y);
+            Events.PlaySFX(dashSFX);
             if (!Mathf.IsZeroApprox(dashY))
             {
                 spriteOffset.Rotation = Mathf.Deg2Rad(90f * dashY);
@@ -233,6 +250,7 @@ namespace Game
             if (barkEffect.Visible)
                 return;
 
+            Events.PlaySFX(barkSFX);
             barkEffect.Visible = true;
             animationController.Bark();
             await this.WaitSeconds(0.6f);
@@ -360,8 +378,17 @@ namespace Game
                         animationController.Play("recovery");
                         IsStunned = true;
                         stunnedForSeconds = LongFallRecoveryTimeSeconds;
+                        Events.PlaySFX(landHardSFX);
+                        Events.ShakeCamera(Vector2.One * 25f, 0.15f);
+                    }
+                    else
+                    {
+                        Events.PlaySFX(landSoftSFX);
+                        Events.ShakeCamera(Vector2.One * 10f, 0.1f);
                     }
                 }
+                else
+                    Events.PlaySFX(landSoftestSFX);
                 timeSpentFalling = 0f;
                 IsInAir = false;
                 HasDash = true;
@@ -456,5 +483,7 @@ namespace Game
             await this.WaitSeconds(0.1f);
             Engine.TimeScale = 1f;
         }
+
+        public void FootstepSFX() => Events.PlaySFX(footstepsSFX);
     }
 }
