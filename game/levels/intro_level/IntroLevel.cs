@@ -12,6 +12,9 @@ namespace Game
         [OnReadyGet]
         private Control title;
 
+        [OnReadyGet]
+        private Control awaken;
+
         protected override void OnLevelReady()
         {
             base.OnLevelReady();
@@ -20,6 +23,16 @@ namespace Game
         public override void Begin()
         {
             InputProcessor.Instance.IgnoreInput = false;
+        }
+
+        public override void _Input(InputEvent e)
+        {
+            base._Input(e);
+            if (InputProcessor.Instance.IgnoreInput)
+                return;
+
+            if (e.IsActionPressed("action_sleep"))
+                awaken.Visible = false;
         }
 
         protected async override void OnHumanDestroyed()

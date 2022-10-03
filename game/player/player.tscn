@@ -3344,7 +3344,6 @@ randomness = 0.43
 visibility_rect = Rect2( -223.051, -161.276, 438.529, 314.706 )
 local_coords = false
 process_material = SubResource( 79 )
-texture = ExtResource( 26 )
 
 [node name="HumanEatenParticles" type="Particles2D" parent="."]
 position = Vector2( 0, -19 )

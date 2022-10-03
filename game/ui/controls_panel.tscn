@@ -117,59 +117,96 @@ margin_left = 140.0
 margin_right = 144.0
 margin_bottom = 16.0
 
-[node name="Label4" type="Label" parent="MarginContainer/HBoxContainer"]
+[node name="Label6" type="Label" parent="MarginContainer/HBoxContainer"]
 margin_left = 148.0
-margin_right = 226.0
+margin_right = 176.0
+margin_bottom = 16.0
+text = "DASH"
+
+[node name="ButtonPrompt7" parent="MarginContainer/HBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 180.0
+margin_right = 196.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+texture = SubResource( 1 )
+Action = "action_jump"
+
+[node name="Label7" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_left = 200.0
+margin_right = 207.0
+margin_bottom = 16.0
+text = "+"
+
+[node name="ButtonPrompt8" parent="MarginContainer/HBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 211.0
+margin_right = 227.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+texture = SubResource( 1 )
+Action = "action_jump"
+
+[node name="VSeparator5" type="VSeparator" parent="MarginContainer/HBoxContainer"]
+margin_left = 231.0
+margin_right = 235.0
+margin_bottom = 16.0
+
+[node name="Label4" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_left = 239.0
+margin_right = 317.0
 margin_bottom = 16.0
 text = "EJECT WASTE"
 
 [node name="ButtonPrompt4" parent="MarginContainer/HBoxContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 230.0
-margin_right = 246.0
+margin_left = 321.0
+margin_right = 337.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 16, 16 )
 texture = SubResource( 4 )
 Action = "action_boneblock"
 
 [node name="VSeparator3" type="VSeparator" parent="MarginContainer/HBoxContainer"]
-margin_left = 250.0
-margin_right = 254.0
+margin_left = 341.0
+margin_right = 345.0
 margin_bottom = 16.0
 
 [node name="Label3" type="Label" parent="MarginContainer/HBoxContainer"]
-margin_left = 258.0
-margin_right = 293.0
+margin_left = 349.0
+margin_right = 384.0
 margin_bottom = 16.0
 text = "SLEEP"
 
 [node name="ButtonPrompt3" parent="MarginContainer/HBoxContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 297.0
-margin_right = 313.0
+margin_left = 388.0
+margin_right = 404.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 16, 16 )
 texture = SubResource( 3 )
 Action = "action_sleep"
 
 [node name="VSeparator4" type="VSeparator" parent="MarginContainer/HBoxContainer"]
-margin_left = 317.0
-margin_right = 321.0
+margin_left = 408.0
+margin_right = 412.0
 margin_bottom = 16.0
 
 [node name="Label2" type="Label" parent="MarginContainer/HBoxContainer"]
-margin_left = 325.0
-margin_right = 353.0
+margin_left = 416.0
+margin_right = 444.0
 margin_bottom = 16.0
 text = "BARK"
 
 [node name="ButtonPrompt2" parent="MarginContainer/HBoxContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 357.0
-margin_right = 373.0
+margin_left = 448.0
+margin_right = 464.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 16, 16 )
 texture = SubResource( 2 )
