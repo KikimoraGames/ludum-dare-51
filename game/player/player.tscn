@@ -1,6 +1,5 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=77 format=2]
 
-[ext_resource path="res://game/util/hide_after_playing_particles.gd" type="Script" id=1]
 [ext_resource path="res://game/player/Player.cs" type="Script" id=2]
 [ext_resource path="res://game/boneblock/boneblock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/tiles/goop.png" type="Texture" id=4]
@@ -10,12 +9,12 @@
 [ext_resource path="res://game/player/goop/goop_solid_1.tscn" type="PackedScene" id=8]
 [ext_resource path="res://game/player/goop/goop_solid_2.tscn" type="PackedScene" id=9]
 [ext_resource path="res://game/player/goop/goop_solid_4.tscn" type="PackedScene" id=10]
-[ext_resource path="res://game/player/body.png" type="Texture" id=11]
 [ext_resource path="res://game/player/PlayerPowerIndicator.cs" type="Script" id=12]
 [ext_resource path="res://game/player/SpriteHolder.cs" type="Script" id=13]
 [ext_resource path="res://game/player/AnimationController.cs" type="Script" id=14]
-[ext_resource path="res://game/player/head.png" type="Texture" id=17]
-[ext_resource path="res://game/player/meatbag.png" type="Texture" id=18]
+[ext_resource path="res://game/player/meatbag.png" type="Texture" id=15]
+[ext_resource path="res://game/player/body.png" type="Texture" id=17]
+[ext_resource path="res://game/player/head.png" type="Texture" id=19]
 
 [sub_resource type="Curve" id=28]
 _data = [ Vector2( 0, 0.5 ), 0.0, 0.5, 0, 1, Vector2( 1, 1 ), 0.5, 0.0, 1, 0 ]
@@ -54,7 +53,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -117,7 +116,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -180,7 +179,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -244,7 +243,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -307,7 +306,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -370,7 +369,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -433,7 +432,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -497,7 +496,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -549,7 +548,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=36]
-length = 1.3
+length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Meatbag:texture")
 tracks/0/interp = 1
@@ -560,7 +559,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -605,14 +604,14 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.1, 1.2, 1.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 11.0, 12.0, 12.0, 12.0, 12.0, 11.0, 13.0, 13.0, 13.0, 14.0, 15.0, 12.0, 16.0 ]
 }
 
 [sub_resource type="Animation" id=37]
-length = 0.8
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Meatbag:texture")
 tracks/0/interp = 1
@@ -623,7 +622,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -668,7 +667,7 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 14.0, 15.0, 12.0, 16.0 ]
@@ -686,7 +685,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -749,7 +748,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -813,7 +812,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -877,7 +876,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -940,7 +939,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -992,7 +991,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=42]
-length = 0.8
+length = 0.4
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Meatbag:texture")
@@ -1004,7 +1003,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Meatbag:hframes")
@@ -1049,7 +1048,7 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 6.0, 7.0 ]
@@ -1069,7 +1068,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1132,7 +1131,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1195,7 +1194,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1259,7 +1258,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1322,7 +1321,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1385,7 +1384,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1448,7 +1447,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1512,7 +1511,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1564,7 +1563,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=50]
-length = 1.3
+length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body:texture")
 tracks/0/interp = 1
@@ -1575,7 +1574,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1620,14 +1619,14 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.1, 1.2, 1.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0 ]
 }
 
 [sub_resource type="Animation" id=51]
-length = 0.8
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body:texture")
 tracks/0/interp = 1
@@ -1638,7 +1637,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1683,7 +1682,7 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 22.0, 23.0, 24.0, 25.0 ]
@@ -1701,7 +1700,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1764,7 +1763,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1828,7 +1827,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1892,7 +1891,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -1955,7 +1954,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -2007,7 +2006,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=56]
-length = 0.8
+length = 0.4
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body:texture")
@@ -2019,7 +2018,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Body:hframes")
@@ -2064,7 +2063,7 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0 ]
@@ -2084,7 +2083,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2147,7 +2146,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2210,7 +2209,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2274,7 +2273,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2337,7 +2336,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2400,7 +2399,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2463,7 +2462,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2526,7 +2525,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2578,7 +2577,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=64]
-length = 1.3
+length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Head:texture")
 tracks/0/interp = 1
@@ -2589,7 +2588,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2634,14 +2633,14 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.1, 1.2, 1.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0 ]
 }
 
 [sub_resource type="Animation" id=65]
-length = 0.8
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Head:texture")
 tracks/0/interp = 1
@@ -2652,7 +2651,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2697,7 +2696,7 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 22.0, 23.0, 24.0, 25.0 ]
@@ -2715,7 +2714,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2778,7 +2777,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2842,7 +2841,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2906,7 +2905,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -2969,7 +2968,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -3021,7 +3020,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=70]
-length = 0.8
+length = 0.4
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Head:texture")
@@ -3033,7 +3032,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:hframes")
@@ -3078,7 +3077,7 @@ tracks/4/loop_wrap = false
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0 ]
@@ -3132,6 +3131,7 @@ color = Color( 1, 1, 1, 0.803922 )
 color_ramp = SubResource( 78 )
 
 [node name="Player" type="KinematicBody2D"]
+z_index = 1
 collision_mask = 3221225472
 script = ExtResource( 2 )
 MovementHorizontalSpeedEaseCurve = SubResource( 28 )
@@ -3156,15 +3156,14 @@ script = ExtResource( 13 )
 position = Vector2( 0, -31 )
 
 [node name="Meatbag" type="Sprite" parent="SpriteHolder/SpriteOffset"]
-texture = ExtResource( 18 )
+texture = ExtResource( 15 )
 hframes = 5
 vframes = 4
 __meta__ = {
-"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVNwcml0ZUhvbGRlci9TcHJpdGVPZmZzZXQvTWVhdGJhZ0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2FzZXByaXRlL3JvYm9wdXBfcGxheWVyLmFzZXByaXRlCmxheWVyfD1tZWF0YmFnCm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PQpvX25hbWV8PQpvbmx5X3Zpc2libGV8PVRydWUKb19leF9wfD0K"
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVNwcml0ZUhvbGRlci9TcHJpdGVPZmZzZXQvTWVhdGJhZ0FuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2FzZXByaXRlL3JvYm9wdXBfcGxheWVyLmFzZXByaXRlCmxheWVyfD1tZWF0YmFnCm9wX2V4cHw9VHJ1ZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
 }
 
 [node name="MeatbagAnimationPlayer" type="AnimationPlayer" parent="SpriteHolder/SpriteOffset"]
-playback_speed = 2.0
 anims/RESET = SubResource( 73 )
 anims/anticipation = SubResource( 29 )
 anims/attack = SubResource( 30 )
@@ -3183,7 +3182,7 @@ anims/up = SubResource( 41 )
 anims/walk = SubResource( 42 )
 
 [node name="Body" type="Sprite" parent="SpriteHolder/SpriteOffset"]
-texture = ExtResource( 11 )
+texture = ExtResource( 17 )
 hframes = 6
 vframes = 5
 __meta__ = {
@@ -3191,7 +3190,6 @@ __meta__ = {
 }
 
 [node name="BodyAnimationPlayer" type="AnimationPlayer" parent="SpriteHolder/SpriteOffset"]
-playback_speed = 2.0
 anims/RESET = SubResource( 71 )
 anims/anticipation = SubResource( 43 )
 anims/attack = SubResource( 44 )
@@ -3210,15 +3208,14 @@ anims/up = SubResource( 55 )
 anims/walk = SubResource( 56 )
 
 [node name="Head" type="Sprite" parent="SpriteHolder/SpriteOffset"]
-texture = ExtResource( 17 )
+texture = ExtResource( 19 )
 hframes = 6
 vframes = 5
 __meta__ = {
-"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVNwcml0ZUhvbGRlci9TcHJpdGVPZmZzZXQvSGVhZEFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2FzZXByaXRlL3JvYm9wdXBfcGxheWVyLmFzZXByaXRlCmxheWVyfD1oZWFkCm9wX2V4cHw9VHJ1ZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PVNwcml0ZUhvbGRlci9TcHJpdGVPZmZzZXQvSGVhZEFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2FzZXByaXRlL3JvYm9wdXBfcGxheWVyLmFzZXByaXRlCmxheWVyfD1oZWFkCm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PQpvX25hbWV8PQpvbmx5X3Zpc2libGV8PVRydWUKb19leF9wfD0K"
 }
 
 [node name="HeadAnimationPlayer" type="AnimationPlayer" parent="SpriteHolder/SpriteOffset"]
-playback_speed = 2.0
 anims/RESET = SubResource( 72 )
 anims/anticipation = SubResource( 57 )
 anims/attack = SubResource( 58 )
@@ -3245,7 +3242,6 @@ margin_bottom = -58.0
 text = "BARK!"
 
 [node name="GoopParticles" type="Particles2D" parent="."]
-visible = false
 position = Vector2( 0, -4 )
 z_index = -2
 amount = 32
@@ -3285,6 +3281,5 @@ randomness = 0.43
 visibility_rect = Rect2( -223.051, -161.276, 438.529, 314.706 )
 local_coords = false
 process_material = SubResource( 79 )
-script = ExtResource( 1 )
 
 [connection signal="on_horizontal_direction_change" from="." to="SpriteHolder" method="OnDirectionChange"]

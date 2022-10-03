@@ -15,6 +15,8 @@ namespace Game
         [Export]
         public float InvulerableAfterStunSeconds { get; private set; } = 0.5f;
         [Export]
+        public float LongFallRecoveryTimeSeconds { get; private set; } = 0.2f;
+        [Export]
         public float MovementSpeedPixelsPerSecond { get; private set; } = 250;
         [Export]
         public Curve MovementHorizontalSpeedEaseCurve { get; private set; }
@@ -259,6 +261,9 @@ namespace Game
         {
             base._PhysicsProcess(delta);
             invulnerabilityTime = Mathf.Clamp(invulnerabilityTime, -1f, invulnerabilityTime - delta);
+            if (IsSleeping)
+                return;
+
             if (IsStunned)
             {
                 stunnedForSeconds -= delta;
@@ -338,14 +343,16 @@ namespace Game
 
             if (isOnFloor && IsInAir)
             {
-                if (timeSpentFalling > 0.5f)
+                if (timeSpentFalling > 0.4f)
                 {
-                    dropDownParticles.Visible = true;
                     dropDownParticles.Restart();
+                    if (!IsStunned && timeSpentFalling > 0.65f)
+                    {
+                        animationController.Play("recovery");
+                        IsStunned = true;
+                        stunnedForSeconds = LongFallRecoveryTimeSeconds;
+                    }
                 }
-
-                if (!IsStunned)
-                    animationController.Play("recovery");
                 timeSpentFalling = 0f;
                 IsInAir = false;
                 HasDash = true;

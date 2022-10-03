@@ -45,6 +45,8 @@ namespace Game
             if (e.IsActionPressed(ACTION_BARK))
             {
                 GetTree().SetInputAsHandled();
+                if (Player.IsSleeping)
+                    return;
                 Player.Bark();
                 return;
             }
@@ -53,6 +55,8 @@ namespace Game
             {
                 GetTree().SetInputAsHandled();
                 if (Player.IsPlacingBlock)
+                    return;
+                if (Player.IsSleeping)
                     return;
 
                 if (Player.IsInAir && Player.CoyoteTime > 1.0f)
@@ -69,6 +73,9 @@ namespace Game
             if (e.IsActionReleased(ACTION_JUMP))
             {
                 GetTree().SetInputAsHandled();
+                if (Player.IsSleeping)
+                    return;
+
                 Player.JumpReleased();
                 return;
             }
