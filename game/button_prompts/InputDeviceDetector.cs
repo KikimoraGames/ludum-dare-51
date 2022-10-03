@@ -74,6 +74,8 @@ namespace Game.UI
 
         public static void Connect(Godot.Object target, string method)
         {
+            if (Instance.IsConnected(nameof(input_device_changed), target, method))
+                return;
             Instance.Connect(nameof(input_device_changed), target, method, binds: null, flags: 0);
         }
 

@@ -75,14 +75,12 @@ _global_script_class_icons={
 [application]
 
 config/name="ldjam51"
-run/main_scene="res://game/main_level.tscn"
+run/main_scene="res://game/main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Events="*res://game/events/Events.cs"
-PlayerPower="*res://game/player/PlayerPower.cs"
-PlayerBonemass="*res://game/player/PlayerBonemass.cs"
 InputDeviceDetector="*res://game/button_prompts/InputDeviceDetector.cs"
 SfxChannel="*res://game/audio_scripts/sfx/sfx_channel.tscn"
 
@@ -90,10 +88,9 @@ SfxChannel="*res://game/audio_scripts/sfx/sfx_channel.tscn"
 
 window/size/width=640
 window/size/height=480
-window/size/resizable=false
 window/size/test_width=1280
 window/size/test_height=720
-window/stretch/mode="viewport"
+window/stretch/mode="2d"
 window/stretch/aspect="expand"
 
 [editor_plugins]
@@ -209,5 +206,5 @@ common/enable_pause_aware_picking=true
 gles3/shaders/shader_compilation_mode=2
 gles3/shaders/shader_compilation_mode.web=2
 gles3/shaders/max_simultaneous_compiles=4
-environment/default_clear_color=Color( 0.133333, 0.0823529, 0.164706, 1 )
+environment/default_clear_color=Color( 0.827451, 0.72549, 0.980392, 1 )
 environment/default_environment="res://default_env.tres"

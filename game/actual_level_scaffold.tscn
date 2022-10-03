@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://game/level_base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://game/levels/level_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/human/human.tscn" type="PackedScene" id=4]
 
 [node name="Main" instance=ExtResource( 1 )]

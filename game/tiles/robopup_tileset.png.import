@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/platform_tileset_placeholder.png-464d9ee54b3e99783a030c7359640bcb.stex"
+path="res://.import/robopup_tileset.png-b4c933aa9c1e83b5a0c366ff631b4b8e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/tiles/platform_tileset_placeholder.png"
-dest_files=[ "res://.import/platform_tileset_placeholder.png-464d9ee54b3e99783a030c7359640bcb.stex" ]
+source_file="res://game/tiles/robopup_tileset.png"
+dest_files=[ "res://.import/robopup_tileset.png-b4c933aa9c1e83b5a0c366ff631b4b8e.stex" ]
 
 [params]
 

@@ -30,6 +30,12 @@ namespace Game
             ZoomCameraStack.SetTarget(Player);
         }
 
+        public void ForceSleep()
+        {
+            Player.SleepPressed();
+            GameplayCameraStack.Priority = 0;
+        }
+
         public override void _UnhandledInput(InputEvent e)
         {
             base._UnhandledInput(e);

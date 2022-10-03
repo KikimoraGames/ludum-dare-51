@@ -112,7 +112,7 @@ namespace Game
             Engine.TimeScale = 1f;
             p.AnimationController.AttackDone();
             QueueFree();
-
+            Events.Emit(nameof(Events.human_destroyed));
         }
 
         private void EmitHumanEaten()

@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://game/Main.cs" type="Script" id=1]
+[ext_resource path="res://game/levels/test_level2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game/levels/test_level.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/levels/test_level3.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Shader" id=1]
+code = "// NOTE: Shader automatically converted from Godot Engine 3.5.1.stable.mono's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_mix;
+
+uniform float radius;
+uniform float feather;
+
+float circle(vec2 position, float r, float f)
+{
+	return smoothstep(r, r + f, length(position - vec2(0.5)));
+}
+
+void fragment() {
+	vec2 uv = UV;
+	float aspect_ratio = SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x;
+	uv.x = mix(0.5, uv.x, aspect_ratio);
+	COLOR.rgb = vec3(0.0);
+	COLOR.a = circle(uv, radius, feather);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/radius = 1.0
+shader_param/feather = 0.1
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[node name="Main" type="Node"]
+script = ExtResource( 1 )
+LevelTransitionEffectPath = NodePath("LevelTransitionLayer/LevelTransitionEffect")
+CurrentLevelHolderPath = NodePath("CurrentLevel")
+levels = [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]
+
+[node name="LevelTransitionLayer" type="CanvasLayer" parent="."]
+layer = 127
+
+[node name="LevelTransitionEffect" type="TextureRect" parent="LevelTransitionLayer"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 4 )
+expand = true
+stretch_mode = 1
+
+[node name="CurrentLevel" type="Node" parent="."]

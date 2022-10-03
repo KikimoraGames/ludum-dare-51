@@ -15,6 +15,8 @@ namespace Game
         public delegate void human_eaten(Texture hat, Color moustacheColor, Color hatColor);
         [Signal]
         public delegate void camera_zoom_request(float scale, float duration, Tween.TransitionType transType = Tween.TransitionType.Linear, Tween.EaseType easeType = Tween.EaseType.InOut);
+        [Signal]
+        public delegate void human_destroyed();
 
         public static void Emit(string signal, params object[] args)
         {

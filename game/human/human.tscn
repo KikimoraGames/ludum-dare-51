@@ -1147,7 +1147,8 @@ _data = {
 radius = 14.0
 height = 44.0
 
-[node name="Human" type="Node2D"]
+[node name="Human" type="Node2D" groups=["humans"]]
+z_index = 1
 script = ExtResource( 7 )
 approvedColors = [ Color( 1, 0.501961, 0.501961, 1 ), Color( 0.396078, 0.960784, 0.854902, 1 ), Color( 0.662745, 0.407843, 0.968627, 1 ), Color( 0.180392, 0.0980392, 0.129412, 1 ), Color( 0.0941176, 0.0156863, 0.176471, 1 ), Color( 0.517647, 0.92549, 0.333333, 1 ) ]
 hatChance = 0.75
