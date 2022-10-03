@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://game/player/SpriteHolder.cs" type="Script" id=1]
 [ext_resource path="res://game/human/body.png" type="Texture" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://game/human/head.png" type="Texture" id=6]
 [ext_resource path="res://game/human/Human.cs" type="Script" id=7]
 [ext_resource path="res://game/audio_assets/sfx/consume/consume_sfx.tres" type="Resource" id=8]
+[ext_resource path="res://game/audio_scripts/sfx/sfx_channel_2d.tscn" type="PackedScene" id=9]
+[ext_resource path="res://game/audio_assets/sfx/footsteps/human_footsteps_sfx.tres" type="Resource" id=10]
 
 [sub_resource type="Animation" id=5]
 resource_name = "RESET"
@@ -812,6 +814,23 @@ tracks/21/keys = {
 "update": 1,
 "values": [ 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 5.0, 9.0 ]
 }
+tracks/22/type = "method"
+tracks/22/path = NodePath("../../../..")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"times": PoolRealArray( 0.0125056, 0.415571 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "FootstepSFX"
+}, {
+"args": [  ],
+"method": "FootstepSFX"
+} ]
+}
 
 [sub_resource type="Animation" id=3]
 length = 0.1
@@ -1133,6 +1152,7 @@ script = ExtResource( 7 )
 approvedColors = [ Color( 1, 0.501961, 0.501961, 1 ), Color( 0.396078, 0.960784, 0.854902, 1 ), Color( 0.662745, 0.407843, 0.968627, 1 ), Color( 0.180392, 0.0980392, 0.129412, 1 ), Color( 0.0941176, 0.0156863, 0.176471, 1 ), Color( 0.517647, 0.92549, 0.333333, 1 ) ]
 hatChance = 0.75
 onConsumeSFX = ExtResource( 8 )
+footstepsSFX = ExtResource( 10 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Path2D/PathFollow2D/SpriteHolder/SpriteOffset")
@@ -1222,6 +1242,9 @@ vframes = 3
 __meta__ = {
 "_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2FzZXByaXRlL2h1bWFuLmFzZXByaXRlCmxheWVyfD1oYXRfMgpvcF9leHB8PUZhbHNlCm9fZm9sZGVyfD0Kb19uYW1lfD0Kb25seV92aXNpYmxlfD1GYWxzZQpvX2V4X3B8PQo="
 }
+
+[node name="SFXChannel2D" parent="Path2D/PathFollow2D" instance=ExtResource( 9 )]
+max_distance = 400.0
 
 [connection signal="body_entered" from="PlayerDetectionArea" to="." method="PlayerDetectionAreaEntered"]
 [connection signal="body_entered" from="Path2D/PathFollow2D/PlayerCollisionArea" to="." method="PlayerCollisionAreaEntered"]

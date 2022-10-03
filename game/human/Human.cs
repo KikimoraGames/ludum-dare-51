@@ -32,8 +32,13 @@ namespace Game
         private PathFollow2D pathFollow;
         [OnReadyGet("AnimationPlayer")]
         private AnimationPlayer animationPlayer;
+        [OnReadyGet("Path2D/PathFollow2D/SFXChannel2D")]
+        private SFXChannel2D sfxChannel;
+
         [Export]
         private RandomSFXContainer onConsumeSFX;
+        [Export]
+        public RandomSFXContainer footstepsSFX;
 
         private float currentTrackFollowMovementSpeed = 0;
 
@@ -128,5 +133,6 @@ namespace Game
 
             Events.HumanEaten(hatTexture, moustacheSprite.SelfModulate, hatColor);
         }
+        public void FootstepSFX() => sfxChannel.Play(footstepsSFX);
     }
 }
