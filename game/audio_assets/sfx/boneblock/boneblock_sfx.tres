@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://game/audio_scripts/sfx/RandomSFXContainer.cs" type="Script" id=1]
+[ext_resource path="res://game/audio_assets/sfx/boneblock/player_spawn_bone_block.wav" type="AudioStream" id=2]
+
+[resource]
+script = ExtResource( 1 )
+Clips = [ ExtResource( 2 ) ]
+Bus = "Boneblock_SFX"
+PitchRandom = true
+PitchRange = Vector2( 5, 10 )
+IsSingleInstance = false
+SingleInstanceTime = 0.0

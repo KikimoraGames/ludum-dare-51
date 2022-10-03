@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=2]
+[gd_scene load_steps=87 format=2]
 
 [ext_resource path="res://game/audio_assets/sfx/jump/jump_sfx.tres" type="Resource" id=1]
 [ext_resource path="res://game/player/Player.cs" type="Script" id=2]
@@ -22,6 +22,9 @@
 [ext_resource path="res://game/audio_assets/sfx/dash/dash_sfx.tres" type="Resource" id=20]
 [ext_resource path="res://game/audio_assets/sfx/land/land_soft_sfx.tres" type="Resource" id=21]
 [ext_resource path="res://game/audio_assets/sfx/land/land_softest_sfx.tres" type="Resource" id=22]
+[ext_resource path="res://game/audio_assets/sfx/sleep/sleep_enter_sfx.tres" type="Resource" id=23]
+[ext_resource path="res://game/audio_assets/sfx/sleep/sleep_exit_sfx.tres" type="Resource" id=24]
+[ext_resource path="res://game/audio_assets/sfx/boneblock/boneblock_sfx.tres" type="Resource" id=25]
 
 [sub_resource type="Curve" id=28]
 _data = [ Vector2( 0, 0.5 ), 0.0, 0.5, 0, 1, Vector2( 1, 1 ), 0.5, 0.0, 1, 0 ]
@@ -3175,6 +3178,9 @@ landHardSFX = ExtResource( 18 )
 landSoftSFX = ExtResource( 21 )
 landSoftestSFX = ExtResource( 22 )
 dashSFX = ExtResource( 20 )
+sleepModeEnterSFX = ExtResource( 23 )
+sleepModeExitSFX = ExtResource( 24 )
+boneblockSFX = ExtResource( 25 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.5, -19.5 )

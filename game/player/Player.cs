@@ -77,6 +77,12 @@ namespace Game
         public RandomSFXContainer landSoftestSFX;
         [Export]
         public RandomSFXContainer dashSFX;
+        [Export]
+        public RandomSFXContainer sleepModeEnterSFX;
+        [Export]
+        public RandomSFXContainer sleepModeExitSFX;
+        [Export]
+        public RandomSFXContainer boneblockSFX;
 
         [OnReadyGet("SpriteHolder/SpriteOffset")]
         private Node2D spriteOffset;
@@ -234,6 +240,7 @@ namespace Game
             PlayerPower.Instance.PowerDrainModifier = 1f;
             goopTracker.SetProcess(true);
             goopParticles.Emitting = true;
+            Events.PlaySFX(sleepModeExitSFX);
         }
 
         public void SleepPressed()
@@ -243,6 +250,7 @@ namespace Game
             PlayerPower.Instance.PowerDrainModifier = 0f;
             goopTracker.SetProcess(false);
             goopParticles.Emitting = false;
+            Events.PlaySFX(sleepModeEnterSFX);
         }
 
         public async void Bark()
@@ -263,6 +271,7 @@ namespace Game
             IsPlacingBlock = true;
             blockPlacementDistanceCovered = 0f;
             animationController.Play("shit");
+            Events.PlaySFX(boneblockSFX);
             var block = boneblockScene.Instance<Boneblock>();
             block.GlobalPosition = GlobalPosition;
             GetParent().AddChild(block);
