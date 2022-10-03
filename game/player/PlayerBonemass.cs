@@ -5,9 +5,9 @@ namespace Game
     public partial class PlayerBonemass : GodotSingleton<PlayerBonemass>
     {
         [Export]
-        public int MaximumBones { get; private set; } = 3;
+        public int MaximumBones { get; private set; } = 100;
         [Export]
-        public int HumansNeededForBone { get; private set; } = 2;
+        public int HumansNeededForBone { get; private set; } = 1;
 
         [Signal]
         public delegate void on_bones_changed(int bones);

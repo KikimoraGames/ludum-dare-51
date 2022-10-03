@@ -63,6 +63,8 @@ namespace Game
         [Export]
         public Curve BlockPlacementDistanceSpeedEaseCurve { get; private set; }
 
+        [OnReadyGet("SpriteHolder/SpriteOffset")]
+        private Node2D spriteOffset;
         [OnReadyGet("BarkEffect")]
         private CanvasItem barkEffect;
         [OnReadyGet("GoopTracker")]
@@ -71,7 +73,6 @@ namespace Game
         private Particles2D goopParticles;
         [OnReadyGet("GoopSolidsEmitter")]
         private GoopSolidsEmitter goopSolidsEmitter;
-
         [OnReadyGet("AnimationController")]
         private AnimationController animationController;
         [OnReadyGet("DropDownParticles")]
@@ -199,7 +200,10 @@ namespace Game
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var dashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection);
             dashDirection = DirectionClamp(dashDirection);
-            DashDirection = dashDirection.Normalized();
+            DashDirection = dashDirection;
+            var dashY = Mathf.Sign(dashDirection.y);
+            if (!Mathf.IsZeroApprox(dashY))
+                spriteOffset.Rotation = Mathf.Deg2Rad(90f * dashY);
             goopSolidsEmitter.EmitSolid(10);
         }
 
@@ -250,6 +254,7 @@ namespace Game
             PlayerPower.Instance.Add(-DashPowerCost);
             IsDashing = false;
             timeSpentFalling = 0f;
+            spriteOffset.Rotation = 0f;
             if (!IsStunned)
                 animationController.Play("down");
         }
