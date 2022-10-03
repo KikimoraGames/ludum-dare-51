@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://game/Main.cs" type="Script" id=1]
 [ext_resource path="res://game/levels/test_level2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/levels/test_level.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/levels/test_level3.tscn" type="PackedScene" id=4]
+[ext_resource path="res://game/audio_assets/robopup_edit_2_mp3.mp3" type="AudioStream" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "// NOTE: Shader automatically converted from Godot Engine 3.5.1.stable.mono's CanvasItemMaterial.
@@ -29,7 +30,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/radius = 1.0
+shader_param/radius = 2.0
 shader_param/feather = 0.1
 
 [sub_resource type="Gradient" id=3]
@@ -57,3 +58,8 @@ expand = true
 stretch_mode = 1
 
 [node name="CurrentLevel" type="Node" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
+bus = "Music"

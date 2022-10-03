@@ -41,7 +41,9 @@ namespace Game
                 currentLoadedLevel.Unload();
 
             var l = level.Instance<Level>();
-            l.Connect(nameof(Level.level_complete), this, nameof(OnLevelComplete), new Godot.Collections.Array { idx });
+            l.Connect(nameof(Level.level_completed), this, nameof(OnLevelComplete), new Godot.Collections.Array { idx });
+            l.Connect(nameof(Level.level_failed), this, nameof(OnLevelFailed), new Godot.Collections.Array { idx });
+
 
             var transitionTween = CreateTween();
             transitionTween.TweenProperty(levelTransitionEffectMaterial, "shader_param/radius", -0.1f, 0.25f).From(1f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
@@ -56,10 +58,11 @@ namespace Game
             currentLevelHolder.AddChild(l);
             await awaiter;
             transitionTween = CreateTween();
-            transitionTween.TweenProperty(levelTransitionEffectMaterial, "shader_param/radius", 1f, 0.15f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
+            transitionTween.TweenProperty(levelTransitionEffectMaterial, "shader_param/radius", 1.1f, 0.15f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
             currentLoadedLevel = l;
             await ToSignal(transitionTween, "finished");
             await this.WaitSeconds(0.5f);
+
             currentLoadedLevel.Begin();
         }
 
@@ -68,5 +71,10 @@ namespace Game
             LoadLevel(levels[(idx + 1) % levels.Count], (idx + 1) % levels.Count);
         }
 
+        private void OnLevelFailed(int idx)
+        {
+            Engine.TimeScale = 1f;
+            LoadLevel(levels[idx], idx);
+        }
     }
 }
