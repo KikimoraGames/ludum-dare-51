@@ -1,11 +1,15 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://game/Main.cs" type="Script" id=1]
-[ext_resource path="res://game/levels/test_level2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game/levels/level_03.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game/levels/level_01.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/levels/level_02.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/audio_assets/robopup_edit_3_normalized_loopable_mp3.mp3" type="AudioStream" id=5]
 [ext_resource path="res://game/levels/intro_level/intro_level.tscn" type="PackedScene" id=6]
 [ext_resource path="res://game/levels/outro_level/outro_level.tscn" type="PackedScene" id=7]
 [ext_resource path="res://game/font.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://game/levels/level_00.tscn" type="PackedScene" id=9]
+[ext_resource path="res://game/levels/level_04.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Shader" id=1]
 code = "// NOTE: Shader automatically converted from Godot Engine 3.5.1.stable.mono's CanvasItemMaterial.
@@ -52,7 +56,7 @@ CurrentLevelHolderPath = NodePath("CurrentLevel")
 GoodbyeButtonPath = NodePath("LevelTransitionLayer/GoodbyeButton")
 introScene = ExtResource( 6 )
 outroScene = ExtResource( 7 )
-levels = [ ExtResource( 2 ) ]
+levels = [ ExtResource( 9 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 10 ) ]
 
 [node name="LevelTransitionLayer" type="CanvasLayer" parent="."]
 layer = 127
