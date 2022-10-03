@@ -13,8 +13,6 @@ tile_data = PoolIntArray( -4128807, 1, 196609, -4128806, 1, 196610, -4128805, 1,
 
 [node name="Player" parent="." index="7"]
 position = Vector2( -536, 144 )
-DashPowerCost = 0.0
-BlockBoneCost = 0
 
 [node name="Human" parent="." index="8" instance=ExtResource( 4 )]
 position = Vector2( -320, 144 )

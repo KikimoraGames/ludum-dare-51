@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://game/audio_assets/sfx/jump/jump_sfx.tres" type="Resource" id=1]
 [ext_resource path="res://game/player/Player.cs" type="Script" id=2]
@@ -3157,6 +3157,36 @@ scale_random = 0.25
 color = Color( 1, 1, 1, 0.803922 )
 color_ramp = SubResource( 78 )
 
+[sub_resource type="Gradient" id=81]
+offsets = PoolRealArray( 0, 0.23908, 0.570115, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 0.40625, 0.40625, 0.40625, 1, 0, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=82]
+gradient = SubResource( 81 )
+
+[sub_resource type="Curve" id=83]
+_data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), -1.0, 0.0, 1, 0 ]
+
+[sub_resource type="CurveTexture" id=84]
+curve = SubResource( 83 )
+
+[sub_resource type="ParticlesMaterial" id=80]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+initial_velocity_random = 0.75
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 16.0
+scale_random = 0.25
+scale_curve = SubResource( 84 )
+color = Color( 1, 0.180392, 0.180392, 1 )
+color_ramp = SubResource( 82 )
+
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 collision_mask = 3221225472
@@ -3318,5 +3348,17 @@ randomness = 0.43
 visibility_rect = Rect2( -223.051, -161.276, 438.529, 314.706 )
 local_coords = false
 process_material = SubResource( 79 )
+
+[node name="HumanEatenParticles" type="Particles2D" parent="."]
+position = Vector2( 0, -19 )
+emitting = false
+amount = 256
+lifetime = 2.0
+one_shot = true
+speed_scale = 4.0
+explosiveness = 1.0
+randomness = 0.27
+local_coords = false
+process_material = SubResource( 80 )
 
 [connection signal="on_horizontal_direction_change" from="." to="SpriteHolder" method="OnDirectionChange"]

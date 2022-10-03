@@ -95,9 +95,11 @@ namespace Game
         [OnReadyGet("GoopSolidsEmitter")]
         private GoopSolidsEmitter goopSolidsEmitter;
         [OnReadyGet("AnimationController")]
-        private AnimationController animationController;
+        public AnimationController AnimationController { get; private set; }
         [OnReadyGet("DropDownParticles")]
         private Particles2D dropDownParticles;
+        [OnReadyGet("HumanEatenParticles")]
+        public Particles2D humanEatenParticles { get; private set; }
 
         public bool IsJumpButtonHeld { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
@@ -143,7 +145,7 @@ namespace Game
         }
 
         [OnReady]
-        private void PlayStatic() => animationController.Play("static");
+        private void PlayStatic() => AnimationController.Play("static");
 
         public void JumpPressed()
         {
@@ -154,7 +156,7 @@ namespace Game
                 return;
             }
             Events.PlaySFX(jumpSFX);
-            animationController.Play("up");
+            AnimationController.Play("up");
             IsJumping = true;
             IsJumpButtonHeld = true;
             jumpHangTimeCurrent = 0f;
@@ -181,7 +183,7 @@ namespace Game
             CollisionMask = newMask;
             var tree = GetTree();
             IsFallingThrough = true;
-            animationController.Play("down");
+            AnimationController.Play("down");
             var count = 0;
             while (count < 5)
             {
@@ -218,7 +220,7 @@ namespace Game
             dashDistanceCovered = 0f;
             dashHangTimeCurrent = 0f;
             PlayerPower.Instance.PowerDrainModifier = 0.0f;
-            animationController.Play("dash");
+            AnimationController.Play("dash");
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var dashDirection = (inputVelocity.LengthSquared() > 0.1f ? inputVelocity : InputProcessor.Instance.LastNonZeroDirection);
             dashDirection = DirectionClamp(dashDirection);
@@ -236,7 +238,7 @@ namespace Game
         public void SleepReleased()
         {
             IsSleeping = false;
-            animationController.Play("static");
+            AnimationController.Play("static");
             PlayerPower.Instance.PowerDrainModifier = 1f;
             goopTracker.SetProcess(true);
             goopParticles.Emitting = true;
@@ -246,7 +248,7 @@ namespace Game
         public void SleepPressed()
         {
             IsSleeping = true;
-            animationController.Play("sit");
+            AnimationController.Play("sit");
             PlayerPower.Instance.PowerDrainModifier = 0f;
             goopTracker.SetProcess(false);
             goopParticles.Emitting = false;
@@ -260,9 +262,9 @@ namespace Game
 
             Events.PlaySFX(barkSFX);
             barkEffect.Visible = true;
-            animationController.Bark();
+            AnimationController.Bark();
             await this.WaitSeconds(0.6f);
-            animationController.BarkDone();
+            AnimationController.BarkDone();
             barkEffect.Visible = false;
         }
 
@@ -270,7 +272,7 @@ namespace Game
         {
             IsPlacingBlock = true;
             blockPlacementDistanceCovered = 0f;
-            animationController.Play("shit");
+            AnimationController.Play("shit");
             Events.PlaySFX(boneblockSFX);
             var block = boneblockScene.Instance<Boneblock>();
             block.GlobalPosition = GlobalPosition;
@@ -286,7 +288,7 @@ namespace Game
             timeSpentFalling = 0f;
             spriteOffset.Rotation = 0f;
             if (!IsStunned)
-                animationController.Play("down");
+                AnimationController.Play("down");
             CollisionMask = CollisionMask | PLATFORM_PHYSICS_LAYER;
         }
 
@@ -357,16 +359,16 @@ namespace Game
             var isOnFloor = IsOnFloor();
             if (isOnFloor && !IsInAir && !IsStunned)
             {
-                var currAnim = animationController.CurrentAnimation;
+                var currAnim = AnimationController.CurrentAnimation;
                 if (horizontalVelocity.LengthSquared() > 0.1f)
                 {
                     if (currAnim != "walk")
-                        animationController.Play("walk");
+                        AnimationController.Play("walk");
                 }
                 else
                 {
                     if (currAnim != "static" && currAnim != "recovery")
-                        animationController.Play("static");
+                        AnimationController.Play("static");
                 }
             }
 
@@ -384,7 +386,7 @@ namespace Game
                     dropDownParticles.Restart();
                     if (!IsStunned && timeSpentFalling > 0.65f)
                     {
-                        animationController.Play("recovery");
+                        AnimationController.Play("recovery");
                         IsStunned = true;
                         invulnerabilityTime = LongFallRecoveryTimeSeconds;
                         stunnedForSeconds = LongFallRecoveryTimeSeconds;
@@ -416,8 +418,8 @@ namespace Game
             {
                 IsJumping = false;
                 timeSpentFalling = 0f;
-                if (animationController.CurrentAnimation != "down")
-                    animationController.Play("down");
+                if (AnimationController.CurrentAnimation != "down")
+                    AnimationController.Play("down");
             };
 
             return verticalVelocity;
@@ -474,13 +476,13 @@ namespace Game
         {
             IsPlacingBlock = false;
             timeSpentFalling = 0f;
-            animationController.Play("static");
+            AnimationController.Play("static");
         }
 
         public async void Stun(float stunForSeconds)
         {
 
-            animationController.Play("stun");
+            AnimationController.Play("stun");
             IsStunned = true;
             stunnedForSeconds = stunForSeconds;
             invulnerabilityTime = 1f;

@@ -22,7 +22,7 @@ func _process(delta : float):
 	if not is_instance_valid(target):
 		return
 	
-	delta = delta / Engine.time_scale
+	# delta = delta / Engine.time_scale
 	var target_position := target.global_position
 	var current_position := global_position
 	

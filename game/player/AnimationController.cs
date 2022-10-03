@@ -17,16 +17,12 @@ namespace Game
 
         public void Play(string animation)
         {
-            head.Play(animation);
             meatbag.Play(animation);
             body.Play(animation);
+            if (head.CurrentAnimation != "attack" || head.CurrentAnimation != "bark_loop")
+                head.Play(animation);
         }
-        public void Queue(string animation)
-        {
-            head.Queue(animation);
-            meatbag.Queue(animation);
-            body.Queue(animation);
-        }
+
 
         public void Bark()
         {
@@ -34,6 +30,17 @@ namespace Game
         }
 
         public void BarkDone()
+        {
+            head.Play(body.CurrentAnimation);
+            head.Seek(body.CurrentAnimationPosition);
+        }
+
+        public void Attack()
+        {
+            head.Play("attack");
+        }
+
+        public void AttackDone()
         {
             head.Play(body.CurrentAnimation);
             head.Seek(body.CurrentAnimationPosition);

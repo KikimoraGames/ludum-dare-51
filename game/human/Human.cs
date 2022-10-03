@@ -32,6 +32,8 @@ namespace Game
         private PathFollow2D pathFollow;
         [OnReadyGet("AnimationPlayer")]
         private AnimationPlayer animationPlayer;
+        [Export]
+        private RandomSFXContainer onConsumeSFX;
 
         private float currentTrackFollowMovementSpeed = 0;
 
@@ -83,16 +85,28 @@ namespace Game
             currentTrackFollowMovementSpeed = MovementSpeedPixelsPerSecond * -Mathf.Sign(spriteHolder.GlobalPosition.DirectionTo(p.GlobalPosition).x);
             animationPlayer.Play("run");
         }
-
-        private void PlayerCollisionAreaEntered(PhysicsBody2D b)
+        private bool isEaten;
+        private async void PlayerCollisionAreaEntered(PhysicsBody2D b)
         {
-            if (!(b is Player p))
+            if (isEaten)
                 return;
 
+            if (!(b is Player p))
+                return;
+            isEaten = true;
             EmitHumanEaten();
-            QueueFree();
+            p.AnimationController.Attack();
             PlayerPower.Instance.Add(PowerOnEat);
             PlayerBonemass.Instance.AddHuman(1);
+            Engine.TimeScale = 0.5f;
+            Events.ZoomCamera(0.8f, 0.2f, Tween.TransitionType.Expo, Tween.EaseType.In);
+            Events.PlaySFX(onConsumeSFX);
+            p.humanEatenParticles.GlobalPosition = pathFollow.GlobalPosition;
+            p.humanEatenParticles.Restart();
+            await this.WaitSeconds(0.1f);
+            Engine.TimeScale = 1f;
+            p.AnimationController.AttackDone();
+            QueueFree();
 
         }
 

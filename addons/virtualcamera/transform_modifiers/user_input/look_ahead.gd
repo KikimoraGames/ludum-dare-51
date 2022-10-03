@@ -15,7 +15,7 @@ func _ready():
 
 
 func _process(delta : float):
-	delta = delta / Engine.time_scale
+	# delta = delta / Engine.time_scale
 	var input_velocity := Input.get_vector("move_left", "move_right", "look_up", "look_down")
 	var target = Vector2(input_velocity.x, input_velocity.y).normalized() * look_ahead_distance
 	var current_position = position

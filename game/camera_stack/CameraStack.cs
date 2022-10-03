@@ -2,11 +2,15 @@ using Godot;
 using Godot.Collections;
 using GodotOnReady.Attributes;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Game
 {
     public partial class CameraStack : Node2D
     {
+        [Export]
+        public bool listenToZoomRequests = false;
+
         protected readonly List<Node> stackCameraModifiers = new List<Node>();
         public Node VirtualCamera { get; private set; }
 
@@ -48,6 +52,14 @@ namespace Game
             }
         }
 
+        [OnReady]
+        private void ConnectZoomListener()
+        {
+            if (!listenToZoomRequests)
+                return;
+            Events.Connect(nameof(Events.camera_zoom_request), this, nameof(ZoomCamera));
+        }
+
         private void TravelStack(Node parent)
         {
             if (parent.IsInGroup("vcamera"))
@@ -71,6 +83,25 @@ namespace Game
         {
             foreach (var sm in stackCameraModifiers)
                 sm.Set("target", target);
+        }
+
+        private async void ZoomCamera(float zoom, float duration, Tween.TransitionType transType, Tween.EaseType easeType)
+        {
+            await ToZoom(zoom, duration, transType, easeType);
+            ZoomResetAsync(0.1f);
+        }
+
+        public async void ToZoomAsync(float zoom, float duration, Tween.TransitionType transType = Tween.TransitionType.Linear, Tween.EaseType easeType = Tween.EaseType.InOut)
+        => await ToZoom(zoom, duration, transType, easeType);
+
+        public async void ZoomResetAsync(float duration, Tween.TransitionType transType = Tween.TransitionType.Linear, Tween.EaseType easeType = Tween.EaseType.InOut)
+           => await ToZoom(1f, duration, transType, easeType);
+
+        internal async Task ToZoom(float zoom, float duration, Tween.TransitionType transType, Tween.EaseType easeType)
+        {
+            var tween = CreateTween();
+            tween.TweenProperty(VirtualCamera, "zoom", zoom * Vector2.One, duration).SetTrans(transType).SetEase(easeType);
+            await ToSignal(tween, "finished");
         }
     }
 }
