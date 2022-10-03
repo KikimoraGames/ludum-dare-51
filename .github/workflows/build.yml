@@ -3,8 +3,8 @@ env:
   GODOT_VERSION: 3.5.1.stable
   EXPORT_NAME: Puppy
   ITCH_USERNAME: kikimora
-  ITCH_GAME_ID: puppy
-  ITCH_URL: https://kikimora.itch.io/puppy
+  ITCH_GAME_ID: robopup
+  ITCH_URL: https://kikimora.itch.io/robopup
 on:
   push:
     branches: [master]
@@ -51,6 +51,7 @@ jobs:
           version: ${{ needs.version.outputs.version_hash }}
           template: ${{matrix.template}}
           export_name: ${{matrix.export_name}}
+          export_flag: "--export"
   update_icon:
     runs-on: windows-2019
     name: Update Windows Icon
