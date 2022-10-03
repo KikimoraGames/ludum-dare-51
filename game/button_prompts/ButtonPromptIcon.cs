@@ -7,6 +7,8 @@ namespace Game.UI.ButtonPrompts
     public class ButtonPromptIcon : TextureRect, IButtonPrompt
     {
         [Export]
+        public string OnlyShowFor { get; set; } = "";
+        [Export]
         private TileSet tileset;
         [Export]
         public string Action { get; set; }
@@ -42,6 +44,12 @@ namespace Game.UI.ButtonPrompts
             {
                 Visible = value;
             }
+        }
+
+        Color IButtonPrompt.SelfModulate
+        {
+            get => SelfModulate;
+            set => SelfModulate = value;
         }
 
         float IButtonPrompt.FPS => FPS;

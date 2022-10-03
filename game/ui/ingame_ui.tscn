@@ -1,10 +1,67 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://game/ui/CurrentPowerLabelIndicator.cs" type="Script" id=1]
-[ext_resource path="res://game/ui/CurrentHumansLabelIndicator.cs" type="Script" id=2]
+[ext_resource path="res://game/font.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://game/ui/CurrentBonesLabelIndicator.cs" type="Script" id=3]
 [ext_resource path="res://game/ui/controls_panel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/ui/human_eaten_info.tscn" type="PackedScene" id=5]
+[ext_resource path="res://game/boneblock/boneblock.png" type="Texture" id=6]
+
+[sub_resource type="DynamicFont" id=11]
+size = 64
+font_data = ExtResource( 2 )
+
+[sub_resource type="Gradient" id=7]
+colors = PoolColorArray( 0.513726, 0.509804, 0.721569, 1, 0.588235, 0.584314, 0.8, 1 )
+
+[sub_resource type="GradientTexture2D" id=8]
+gradient = SubResource( 7 )
+fill_from = Vector2( 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=15]
+texture = SubResource( 8 )
+region_rect = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label2:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "beat"
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label2:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 2, 0.5 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ) ]
+}
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = SubResource( 8 )
+region_rect = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 36
+font_data = ExtResource( 2 )
 
 [node name="UI" type="CanvasLayer"]
 
@@ -17,84 +74,86 @@ custom_constants/margin_top = 5
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
-[node name="Control" type="Control" parent="MarginContainer"]
+[node name="PowerRemaining" type="Control" parent="MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 635.0
 margin_bottom = 475.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
+[node name="Label2" type="Label" parent="MarginContainer/PowerRemaining"]
+anchor_right = 1.0
+margin_bottom = 16.0
+rect_pivot_offset = Vector2( 315, 32 )
+custom_fonts/font = SubResource( 11 )
+text = "10.00"
+align = 1
+valign = 1
+script = ExtResource( 1 )
+AnimationPlayerPath = NodePath("../AnimationPlayer")
+okColor = Color( 1, 1, 1, 1 )
+badColor = Color( 0.133333, 0, 0, 1 )
+
+[node name="Panel" type="Panel" parent="MarginContainer/PowerRemaining/Label2"]
+self_modulate = Color( 1, 1, 1, 0.15 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 15 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/PowerRemaining"]
+anims/RESET = SubResource( 13 )
+anims/beat = SubResource( 14 )
+
+[node name="OtherUI" type="Control" parent="MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 635.0
+margin_bottom = 475.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/OtherUI"]
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
-margin_right = 92.0
-margin_bottom = 50.0
+[node name="BonesIndicator" type="PanelContainer" parent="MarginContainer/OtherUI/VBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0.15 )
+margin_right = 94.0
+margin_bottom = 58.0
+custom_styles/panel = SubResource( 9 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 85.0
-margin_bottom = 43.0
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/OtherUI/VBoxContainer/BonesIndicator"]
+margin_right = 94.0
+margin_bottom = 58.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer/VBoxContainer"]
-margin_right = 78.0
-margin_bottom = 16.0
-text = "POWER"
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/OtherUI/VBoxContainer/BonesIndicator/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 89.0
+margin_bottom = 53.0
 
-[node name="Label2" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer/VBoxContainer"]
-margin_top = 20.0
-margin_right = 78.0
-margin_bottom = 36.0
-text = "10.00"
-script = ExtResource( 1 )
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/OtherUI/VBoxContainer/BonesIndicator/MarginContainer/VBoxContainer"]
+margin_right = 48.0
+margin_bottom = 48.0
+texture = ExtResource( 6 )
 
-[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
-margin_top = 54.0
-margin_right = 92.0
-margin_bottom = 104.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/PanelContainer2"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 85.0
-margin_bottom = 43.0
-
-[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer2/VBoxContainer"]
-margin_right = 78.0
-margin_bottom = 16.0
-text = "BONES"
-
-[node name="Label2" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer2/VBoxContainer"]
-margin_top = 20.0
-margin_right = 78.0
-margin_bottom = 36.0
-text = "3"
+[node name="Label2" type="Label" parent="MarginContainer/OtherUI/VBoxContainer/BonesIndicator/MarginContainer/VBoxContainer"]
+margin_left = 52.0
+margin_top = 6.0
+margin_right = 84.0
+margin_bottom = 42.0
+custom_fonts/font = SubResource( 10 )
+text = "99"
+align = 1
+valign = 1
 script = ExtResource( 3 )
 
-[node name="PanelContainer3" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
-margin_top = 108.0
-margin_right = 92.0
-margin_bottom = 158.0
+[node name="ControlsPanel" parent="MarginContainer/OtherUI" instance=ExtResource( 4 )]
+self_modulate = Color( 1, 1, 1, 0.15 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/PanelContainer3"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 85.0
-margin_bottom = 43.0
-
-[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer3/VBoxContainer"]
-margin_right = 78.0
-margin_bottom = 16.0
-text = "EAT FOR BONE"
-
-[node name="Label2" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer3/VBoxContainer"]
-margin_top = 20.0
-margin_right = 78.0
-margin_bottom = 36.0
-text = "1/2"
-script = ExtResource( 2 )
-
-[node name="ControlsPanel" parent="MarginContainer/Control" instance=ExtResource( 4 )]
-
-[node name="HumanEatenInfo" parent="MarginContainer/Control" instance=ExtResource( 5 )]
+[node name="HumanEatenInfo" parent="MarginContainer/OtherUI" instance=ExtResource( 5 )]
+anchor_top = 0.551064
+anchor_right = 0.184127
+anchor_bottom = 0.895745
