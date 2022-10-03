@@ -10,9 +10,14 @@ namespace Game
         private float MovementSpeedPixelsPerSecond = 200;
         [Export]
         private float StunForSeconds = 1.5f;
+        [Export]
+        private RandomSFXContainer playerDetectedSFX;
+        [Export]
+        private RandomSFXContainer playerZapSFX;
+
+
         [OnReadyGet("SpriteHolder")]
         private SpriteHolder spriteHolder;
-
         [OnReadyGet("SpriteHolder/Sprite")]
         private Sprite sprite;
 
@@ -86,6 +91,7 @@ namespace Game
             globalPositionWhenPlayerTrackingStarted = GlobalPosition;
             player = p;
             IsTrackingPlayer = true;
+            Events.PlaySFX(playerDetectedSFX);
         }
 
         public void BodyExitedDetectionArea(PhysicsBody2D b)
@@ -105,7 +111,10 @@ namespace Game
         {
             if (!(b is Player p))
                 return;
+            if (!p.CanBeStunned)
+                return;
             IsZapping = true;
+            Events.PlaySFX(playerZapSFX);
             p.Stun(StunForSeconds);
             var tween = CreateTween();
             tween.TweenProperty(sprite, "scale", Vector2.One * 20, 0.15f).AsRelative().SetTrans(Tween.TransitionType.Bounce).SetEase(Tween.EaseType.In);

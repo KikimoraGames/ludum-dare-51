@@ -9,6 +9,10 @@ namespace Game
     {
         [Export]
         private float StunForSeconds = 1.5f;
+        [Export]
+        private RandomSFXContainer beepSFX;
+        [Export]
+        private RandomSFXContainer playerZapSFX;
 
         [OnReadyGet("AnimationPlayer")]
         private AnimationPlayer animationPlayer;
@@ -42,8 +46,10 @@ namespace Game
                 return;
             }
 
+            Events.PlaySFX(playerZapSFX);
             p.Stun(StunForSeconds);
             animationPlayer.Play("zap");
+            SetProcess(false);
         }
 
         public void BodyExitedAttackArea(PhysicsBody2D b)
@@ -63,6 +69,7 @@ namespace Game
             if (!player.CanBeStunned)
                 return;
 
+            Events.PlaySFX(playerZapSFX);
             player.Stun(StunForSeconds);
             animationPlayer.Play("zap");
             SetProcess(false);
@@ -75,5 +82,7 @@ namespace Game
 
             QueueFree();
         }
+
+        public void Beep() => Events.PlaySFX(beepSFX);
     }
 }

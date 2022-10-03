@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://game/audio_scripts/sfx/RandomSFXContainer.cs" type="Script" id=1]
+[ext_resource path="res://game/audio_assets/sfx/robopolice/robopolice_emp_blast.wav" type="AudioStream" id=2]
+[ext_resource path="res://game/audio_assets/sfx/robopolice/robopolice_emp_blast_v2.wav" type="AudioStream" id=3]
+
+[resource]
+script = ExtResource( 1 )
+Clips = [ ExtResource( 2 ), ExtResource( 3 ) ]
+Bus = "SFX"
+PitchRandom = true
+PitchRange = Vector2( 2, 4 )
+IsSingleInstance = false
+SingleInstanceTime = 0.0

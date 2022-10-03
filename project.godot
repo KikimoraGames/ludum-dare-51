@@ -84,6 +84,7 @@ Events="*res://game/events/Events.cs"
 PlayerPower="*res://game/player/PlayerPower.cs"
 PlayerBonemass="*res://game/player/PlayerBonemass.cs"
 InputDeviceDetector="*res://game/button_prompts/InputDeviceDetector.cs"
+SfxChannel="*res://game/audio_scripts/sfx/sfx_channel.tscn"
 
 [display]
 

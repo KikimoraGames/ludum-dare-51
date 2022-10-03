@@ -130,8 +130,8 @@ namespace Game
 
         public bool IsSleeping { get; private set; } = false;
         public bool IsStunned { get; private set; } = false;
-        public bool IsInvulnerable => invulnerabilityTime > 0f;
-        public bool CanBeStunned => !IsStunned && !IsInvulnerable;
+        public bool IsVulnerable => invulnerabilityTime <= 0f;
+        public bool CanBeStunned => !IsStunned && IsVulnerable;
         private Vector2 lastFrameVelocity;
         private float stunnedForSeconds = 0f;
         private float invulnerabilityTime = -1f;
@@ -296,7 +296,6 @@ namespace Game
         public override void _PhysicsProcess(float delta)
         {
             base._PhysicsProcess(delta);
-            invulnerabilityTime = Mathf.Clamp(invulnerabilityTime, -1f, invulnerabilityTime - delta);
             if (IsSleeping)
                 return;
 
@@ -309,6 +308,7 @@ namespace Game
                     invulnerabilityTime = InvulerableAfterStunSeconds;
                 }
             }
+            else invulnerabilityTime = Mathf.Clamp(invulnerabilityTime, -1f, invulnerabilityTime - delta);
 
             var inputVelocity = InputProcessor.Instance.InputVelocity;
             var horizontalVelocity = Vector2.Right * inputVelocity;
@@ -386,6 +386,7 @@ namespace Game
                     {
                         animationController.Play("recovery");
                         IsStunned = true;
+                        invulnerabilityTime = LongFallRecoveryTimeSeconds;
                         stunnedForSeconds = LongFallRecoveryTimeSeconds;
                         Events.PlaySFX(landHardSFX);
                         Events.ShakeCamera(Vector2.One * 25f, 0.15f);
@@ -482,6 +483,7 @@ namespace Game
             animationController.Play("stun");
             IsStunned = true;
             stunnedForSeconds = stunForSeconds;
+            invulnerabilityTime = 1f;
             if (IsDashing)
                 DashDone();
 
