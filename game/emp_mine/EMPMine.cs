@@ -17,12 +17,13 @@ namespace Game
         [OnReadyGet("AnimationPlayer")]
         private AnimationPlayer animationPlayer;
 
+        private bool isDetonating = false;
         public void BodyEnteredDetectionArea(PhysicsBody2D b)
         {
             if (!(b is Player p))
                 return;
 
-            animationPlayer.Play("player_detected");
+            animationPlayer.Play("blink");
         }
 
         public void BodyExitedDetectionArea(PhysicsBody2D b)
@@ -30,8 +31,25 @@ namespace Game
             if (!(b is Player))
                 return;
 
-            animationPlayer.Play("static");
+            animationPlayer.Play("off");
         }
+
+        public void BodyEnteredNearDetectionArea(PhysicsBody2D b)
+        {
+            if (!(b is Player p))
+                return;
+
+            animationPlayer.Play("intense blink");
+        }
+
+        public void BodyExitedNearDetectionArea(PhysicsBody2D b)
+        {
+            if (!(b is Player))
+                return;
+
+            animationPlayer.Play("blink");
+        }
+
 
         private Player player;
 
@@ -46,15 +64,16 @@ namespace Game
                 return;
             }
 
-            Events.PlaySFX(playerZapSFX);
-            p.Stun(StunForSeconds);
-            animationPlayer.Play("zap");
+            isDetonating = true;
+            animationPlayer.Play("anticipation");
             SetProcess(false);
         }
 
         public void BodyExitedAttackArea(PhysicsBody2D b)
         {
             if (!(b is Player p))
+                return;
+            if (isDetonating)
                 return;
             player = null;
             SetProcess(false);
@@ -69,17 +88,18 @@ namespace Game
             if (!player.CanBeStunned)
                 return;
 
-            Events.PlaySFX(playerZapSFX);
-            player.Stun(StunForSeconds);
-            animationPlayer.Play("zap");
+            isDetonating = true;
+            animationPlayer.Play("anticipation");
             SetProcess(false);
         }
 
         public void AnimationFinished(string anim)
         {
-            if (anim != "zap")
+            if (anim != "anticipation")
                 return;
 
+            Events.PlaySFX(playerZapSFX);
+            player.Stun(StunForSeconds);
             QueueFree();
         }
 

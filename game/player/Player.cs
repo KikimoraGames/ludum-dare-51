@@ -391,11 +391,13 @@ namespace Game
                         invulnerabilityTime = LongFallRecoveryTimeSeconds;
                         stunnedForSeconds = LongFallRecoveryTimeSeconds;
                         Events.PlaySFX(landHardSFX);
+                        Events.ZoomCamera(0.85f, 0.1f, Tween.TransitionType.Expo, Tween.EaseType.Out);
                         Events.ShakeCamera(Vector2.One * 25f, 0.15f);
                     }
                     else
                     {
                         Events.PlaySFX(landSoftSFX);
+                        Events.ZoomCamera(0.95f, 0.1f, Tween.TransitionType.Expo, Tween.EaseType.Out);
                         Events.ShakeCamera(Vector2.One * 10f, 0.1f);
                     }
                 }
@@ -493,6 +495,7 @@ namespace Game
             IsPlacingBlock = false;
             Engine.TimeScale = 0.1f;
             Events.ShakeCamera(Vector2.One * 50f, 0.5f);
+            Events.ZoomCamera(0.8f, 0.1f, Tween.TransitionType.Expo, Tween.EaseType.Out);
             await this.WaitSeconds(0.1f);
             Engine.TimeScale = 1f;
         }
