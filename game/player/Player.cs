@@ -13,6 +13,8 @@ namespace Game
         public delegate void on_horizontal_direction_change(float dir);
 
         [Export]
+        public float InvulerableAfterStunSeconds { get; private set; } = 0.5f;
+        [Export]
         public float MovementSpeedPixelsPerSecond { get; private set; } = 250;
         [Export]
         public Curve MovementHorizontalSpeedEaseCurve { get; private set; }
@@ -102,8 +104,11 @@ namespace Game
 
         public bool IsSleeping { get; private set; } = false;
         public bool IsStunned { get; private set; } = false;
+        public bool IsInvulnerable => invulnerabilityTime > 0f;
+        public bool CanBeStunned => !IsStunned && !IsInvulnerable;
         private Vector2 lastFrameVelocity;
         private float stunnedForSeconds = 0f;
+        private float invulnerabilityTime = -1f;
 
         private static Vector2 DirectionClamp(Vector2 v)
         {
@@ -240,7 +245,8 @@ namespace Game
             PlayerPower.Instance.Add(-DashPowerCost);
             IsDashing = false;
             timeSpentFalling = 0f;
-            animationController.Play("static");
+            if (!IsStunned)
+                animationController.Play("static");
         }
 
         private float previousHorizontalInputDirection;
@@ -249,11 +255,15 @@ namespace Game
         public override void _PhysicsProcess(float delta)
         {
             base._PhysicsProcess(delta);
+            invulnerabilityTime = Mathf.Clamp(invulnerabilityTime, -1f, invulnerabilityTime - delta);
             if (IsStunned)
             {
                 stunnedForSeconds -= delta;
                 if (stunnedForSeconds < 0)
+                {
                     IsStunned = false;
+                    invulnerabilityTime = InvulerableAfterStunSeconds;
+                }
             }
 
             var inputVelocity = InputProcessor.Instance.InputVelocity;
@@ -310,6 +320,7 @@ namespace Game
                 }
                 else
                 {
+
                     if (animationController.CurrentAnimation != "static")
                         animationController.Play("static");
                 }
@@ -324,8 +335,11 @@ namespace Game
 
             if (isOnFloor && IsInAir)
             {
-                animationController.Play("recovery");
-                animationController.Queue("static");
+                if (!IsStunned)
+                {
+                    animationController.Play("recovery");
+                    animationController.Queue("static");
+                }
                 timeSpentFalling = 0f;
                 IsInAir = false;
                 HasDash = true;
@@ -401,15 +415,21 @@ namespace Game
             animationController.Play("static");
         }
 
-        public void Stun(float stunForSeconds)
+        public async void Stun(float stunForSeconds)
         {
 
             animationController.Play("stun");
             IsStunned = true;
             stunnedForSeconds = stunForSeconds;
-            IsDashing = false;
+            if (IsDashing)
+                DashDone();
+
             IsJumping = false;
             IsPlacingBlock = false;
+            Engine.TimeScale = 0.1f;
+            Events.ShakeCamera(Vector2.One * 50f, 0.5f);
+            await this.WaitSeconds(0.1f);
+            Engine.TimeScale = 1f;
         }
     }
 }

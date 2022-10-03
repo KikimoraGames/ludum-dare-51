@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://game/level_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/pickups/power_pickup.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game/robopolice/robopolice.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/emp_mine/emp_mine.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -31,3 +32,6 @@ curve = SubResource( 1 )
 position = Vector2( 312.762, -151.373 )
 offset = 529.136
 lookahead = 10.0
+
+[node name="EMPMine" parent="." index="11" instance=ExtResource( 4 )]
+position = Vector2( -148, 139 )

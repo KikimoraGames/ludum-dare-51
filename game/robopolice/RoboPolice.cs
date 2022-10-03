@@ -35,7 +35,7 @@ namespace Game
 
             if (IsTrackingPlayer)
             {
-                if (player == null || !player.IsStunned)
+                if (player.CanBeStunned)
                 {
                     var dir = GlobalPosition.DirectionTo(player.GlobalPosition);
                     spriteHolder.OnDirectionChange(Mathf.Sign(dir.x));
@@ -50,7 +50,7 @@ namespace Game
 
             if (IsReturningToPatrol)
             {
-                if (player == null || player.IsStunned)
+                if (player == null || !player.CanBeStunned)
                 {
                     var dir = GlobalPosition.DirectionTo(globalPositionWhenPlayerTrackingStarted);
                     spriteHolder.OnDirectionChange(Mathf.Sign(dir.x));

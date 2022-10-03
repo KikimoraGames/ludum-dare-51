@@ -38,8 +38,9 @@ func _process(delta : float):
 	if not Engine.editor_hint:
 		current_duration -= delta
 		if current_duration <= 0:
-			position = Vector2.ZERO
-			rotation = 0
+			var t = create_tween()
+			t.tween_property(self, "position", Vector2.ZERO, 0.1)
+			t.tween_property(self, "rotation", 0, 0.1)
 			set_process(false)
 			return
 

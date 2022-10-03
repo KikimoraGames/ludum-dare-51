@@ -10,8 +10,7 @@ namespace Game
         [Signal]
         public delegate void request_sfx_play(AudioStream sfx, string bus);
         [Signal]
-        public delegate void camera_impulse_sent(Vector3 velocity, float duration);
-
+        public delegate void camera_impulse_sent(Vector2 velocity, float duration);
 
         public static void Emit(string signal, params object[] args)
         {
@@ -25,6 +24,6 @@ namespace Game
 
         public static void PlaySFX(AudioStream sfx, string bus) => Emit(nameof(request_sfx_play), sfx, bus);
         public static void PlaySFX(RandomSFXContainer container) => Emit(nameof(request_sfx_rand_play), container);
-        public static void ShakeCamera(Vector3 velocity, float duration) => Emit(nameof(camera_impulse_sent), velocity, duration);
+        public static void ShakeCamera(Vector2 velocity, float duration) => Emit(nameof(camera_impulse_sent), velocity, duration);
     }
 }
