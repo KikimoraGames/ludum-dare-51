@@ -32,7 +32,7 @@ namespace Game
         [OnReady]
         private void LoadFirstLevel()
         {
-            LoadLevel(levels[0], 0);
+            LoadLevel(introScene, -1);
         }
 
         private async void LoadLevel(PackedScene level, int idx)
@@ -57,11 +57,12 @@ namespace Game
             var awaiter = ToSignal(l, "ready");
             currentLevelHolder.AddChild(l);
             await awaiter;
+            await this.WaitSeconds(1f);
             transitionTween = CreateTween();
             transitionTween.TweenProperty(levelTransitionEffectMaterial, "shader_param/radius", 1.1f, 0.15f).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
             currentLoadedLevel = l;
             await ToSignal(transitionTween, "finished");
-            await this.WaitSeconds(0.5f);
+
 
             currentLoadedLevel.Begin();
         }
@@ -74,7 +75,10 @@ namespace Game
         private void OnLevelFailed(int idx)
         {
             Engine.TimeScale = 1f;
-            LoadLevel(levels[idx], idx);
+            if (idx == -1)
+                LoadLevel(introScene, idx);
+            else
+                LoadLevel(levels[idx], idx);
         }
     }
 }

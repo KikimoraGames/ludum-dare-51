@@ -1,14 +1,14 @@
 [gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://game/audio_scripts/sfx/RandomSFXContainer.cs" type="Script" id=1]
-[ext_resource path="res://game/audio_assets/sfx/footsteps/chrispy_footstep_3.wav" type="AudioStream" id=2]
-[ext_resource path="res://game/audio_assets/sfx/footsteps/chrispy_footstep_2.wav" type="AudioStream" id=3]
-[ext_resource path="res://game/audio_assets/sfx/footsteps/chrispy_footstep_1.wav" type="AudioStream" id=4]
-[ext_resource path="res://game/audio_assets/sfx/footsteps/chrispy_footstep_4.wav" type="AudioStream" id=5]
+[ext_resource path="res://game/audio_assets/sfx/footsteps/chrispy_footstep_1_v2.wav" type="AudioStream" id=2]
+[ext_resource path="res://game/audio_assets/sfx/footsteps/chrispy_footstep_4_v2.wav" type="AudioStream" id=3]
+[ext_resource path="res://game/audio_assets/sfx/footsteps/chrispy_footstep_3_v2.wav" type="AudioStream" id=4]
+[ext_resource path="res://game/audio_assets/sfx/footsteps/chrispy_footstep_2_v2.wav" type="AudioStream" id=5]
 
 [resource]
 script = ExtResource( 1 )
-Clips = [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 5 ) ]
+Clips = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ) ]
 Bus = "Footsteps_SFX"
 PitchRandom = false
 PitchRange = Vector2( 0, 0 )

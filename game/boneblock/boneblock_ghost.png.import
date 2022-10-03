@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/button_prompt_tilemap_3d.png-d515665b2b9f1f92a4676ca038ea4dcd.stex"
+path="res://.import/boneblock_ghost.png-133d1cc1e8e90a73d611940f3c0457fd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/button_prompts/button_prompt_tilemap_3d.png"
-dest_files=[ "res://.import/button_prompt_tilemap_3d.png-d515665b2b9f1f92a4676ca038ea4dcd.stex" ]
+source_file="res://game/boneblock/boneblock_ghost.png"
+dest_files=[ "res://.import/boneblock_ghost.png-133d1cc1e8e90a73d611940f3c0457fd.stex" ]
 
 [params]
 
@@ -23,7 +23,7 @@ flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

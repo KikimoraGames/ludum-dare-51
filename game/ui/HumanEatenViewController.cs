@@ -191,8 +191,8 @@ namespace Game
                 currentDisapperTween.Kill();
             mainControl.Modulate = new Color(mainControl.Modulate, 1f);
             var tween = CreateTween();
-            tween.TweenProperty(mainControl, "rect_scale", Vector2.One * 1.25f, 0.15f).From(Vector2.One).SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-            tween.TweenProperty(mainControl, "rect_scale", Vector2.One, 0.1f).SetTrans(Tween.TransitionType.Linear).SetDelay(0.1f);
+            tween.TweenProperty(viewer, "rect_scale", Vector2.One * 1.25f, 0.15f).From(Vector2.One).SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
+            tween.TweenProperty(viewer, "rect_scale", Vector2.One, 0.1f).SetTrans(Tween.TransitionType.Linear).SetDelay(0.1f);
         }
 
         private void OnTimeout()

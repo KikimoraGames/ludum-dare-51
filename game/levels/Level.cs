@@ -41,13 +41,13 @@ namespace Game
             InputProcessor.Instance.IgnoreInput = true;
         }
 
-        public void Begin()
+        public virtual void Begin()
         {
             PlayerPower.Instance.PowerDrainModifier = 1f;
             InputProcessor.Instance.IgnoreInput = false;
         }
 
-        private void OnHumanDestroyed()
+        protected virtual void OnHumanDestroyed()
         {
             var hs = GetTree().GetNodesInGroup<Human>("humans", this);
             if (hs.Count <= 0)

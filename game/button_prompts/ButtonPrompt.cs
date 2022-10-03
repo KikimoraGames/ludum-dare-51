@@ -10,6 +10,8 @@ namespace Game.UI.ButtonPrompts
         bool Visible { get; set; }
         TileSet TileSet { get; }
         void SetProcess(bool b);
+        string OnlyShowFor { get; set; }
+        Color SelfModulate { get; set; }
     }
     internal class ButtonPrompt
     {
@@ -73,6 +75,13 @@ namespace Game.UI.ButtonPrompts
         private void RefreshIcon()
         {
             var actionKey = InputDeviceDetector.GetActionForDevice(prompt.Action);
+            if (!string.IsNullOrEmpty(prompt.OnlyShowFor))
+            {
+                if (!actionKey.Contains(prompt.OnlyShowFor))
+                    prompt.SelfModulate = new Color(prompt.SelfModulate, 0f);
+                else
+                    prompt.SelfModulate = new Color(prompt.SelfModulate, 1f);
+            }
             tileIDs.Clear();
             var startVisible = prompt.Visible;
             foreach (var k in new string[] { $"{actionKey}_unpressed", $"{actionKey}_pressed" })
