@@ -1,0 +1,225 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://game/human/hat_2.png" type="Texture" id=1]
+[ext_resource path="res://game/human/moustache.png" type="Texture" id=2]
+[ext_resource path="res://game/human/head.png" type="Texture" id=3]
+[ext_resource path="res://game/ui/HumanEatenViewController.cs" type="Script" id=4]
+[ext_resource path="res://game/ui/AutomaticPivotOffset.cs" type="Script" id=5]
+
+[sub_resource type="Animation" id=2]
+resource_name = "default"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Head:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Head:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Head:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Moustache:hframes")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Moustache:vframes")
+tracks/5/interp = 1
+tracks/5/loop_wrap = false
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Moustache:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = false
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Hat:hframes")
+tracks/7/interp = 1
+tracks/7/loop_wrap = false
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Hat:vframes")
+tracks/8/interp = 1
+tracks/8/loop_wrap = false
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Hat:frame")
+tracks/9/interp = 1
+tracks/9/loop_wrap = false
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 5.0, 9.0 ]
+}
+
+[node name="HumanEatenInfo" type="VBoxContainer"]
+anchor_top = 0.653192
+anchor_right = 0.187302
+anchor_bottom = 0.891
+margin_left = -21.0
+margin_bottom = 0.22998
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 140.0
+margin_bottom = 14.0
+text = "Mr. Johnson"
+align = 1
+valign = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+margin_top = 18.0
+margin_right = 140.0
+margin_bottom = 114.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer"]
+margin_left = 22.0
+margin_right = 118.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+stretch_mode = 6
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 64, 64 )
+transparent_bg = true
+handle_input_locally = false
+hdr = false
+usage = 1
+render_target_v_flip = true
+render_target_update_mode = 3
+gui_snap_controls_to_pixels = false
+
+[node name="HumanHolder" type="Node2D" parent="Viewport"]
+position = Vector2( 32, 32 )
+
+[node name="Head" type="Sprite" parent="Viewport/HumanHolder"]
+texture = ExtResource( 3 )
+hframes = 4
+vframes = 3
+frame = 2
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2FzZXByaXRlL2h1bWFuLmFzZXByaXRlCmxheWVyfD1oZWFkCm9wX2V4cHw9RmFsc2UKb19mb2xkZXJ8PQpvX25hbWV8PQpvbmx5X3Zpc2libGV8PUZhbHNlCm9fZXhfcHw9Cg=="
+}
+
+[node name="Hat" type="Sprite" parent="Viewport/HumanHolder"]
+self_modulate = Color( 1, 0.4, 0.4, 1 )
+texture = ExtResource( 1 )
+hframes = 4
+vframes = 3
+frame = 3
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2FzZXByaXRlL2h1bWFuLmFzZXByaXRlCmxheWVyfD1oYXRfMQpvcF9leHB8PUZhbHNlCm9fZm9sZGVyfD0Kb19uYW1lfD0Kb25seV92aXNpYmxlfD1GYWxzZQpvX2V4X3B8PQo="
+}
+
+[node name="Moustache" type="Sprite" parent="Viewport/HumanHolder"]
+self_modulate = Color( 0.352941, 0.619608, 1, 1 )
+texture = ExtResource( 2 )
+hframes = 4
+vframes = 3
+frame = 3
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2FzZXByaXRlL2h1bWFuLmFzZXByaXRlCmxheWVyfD1tb3VzdGFjaGUKb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9RmFsc2UKb19leF9wfD0K"
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Viewport/HumanHolder"]
+autoplay = "default"
+anims/default = SubResource( 2 )
+
+[node name="HumanEatenViewController" type="Node" parent="."]
+script = ExtResource( 4 )
+HatSpritePath = NodePath("../Viewport/HumanHolder/Hat")
+MoustacheSpritePath = NodePath("../Viewport/HumanHolder/Moustache")
+NameLabelPath = NodePath("../Label")
+ViewerPath = NodePath("../AspectRatioContainer/TextureRect")
+ViewportPath = NodePath("../Viewport")
+DissapearTimerPath = NodePath("Timer")
+MainControlPath = NodePath("..")
+
+[node name="Timer" type="Timer" parent="HumanEatenViewController"]
+one_shot = true

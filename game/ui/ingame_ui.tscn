@@ -1,86 +1,100 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://game/ui/CurrentPowerLabelIndicator.cs" type="Script" id=1]
 [ext_resource path="res://game/ui/CurrentHumansLabelIndicator.cs" type="Script" id=2]
 [ext_resource path="res://game/ui/CurrentBonesLabelIndicator.cs" type="Script" id=3]
 [ext_resource path="res://game/ui/controls_panel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://game/ui/human_eaten_info.tscn" type="PackedScene" id=5]
 
 [node name="UI" type="CanvasLayer"]
 
-[node name="Control" type="Control" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+rect_min_size = Vector2( 640, 480 )
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="Control" type="Control" parent="MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 635.0
+margin_bottom = 475.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
 margin_right = 108.0
 margin_bottom = 46.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/PanelContainer"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 101.0
 margin_bottom = 39.0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer/VBoxContainer"]
 margin_right = 94.0
 margin_bottom = 14.0
 text = "POWER"
 
-[node name="Label2" type="Label" parent="Control/VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 94.0
 margin_bottom = 32.0
 text = "10.00"
 script = ExtResource( 1 )
 
-[node name="PanelContainer2" type="PanelContainer" parent="Control/VBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
 margin_top = 50.0
 margin_right = 108.0
 margin_bottom = 96.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/PanelContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/PanelContainer2"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 101.0
 margin_bottom = 39.0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/PanelContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer2/VBoxContainer"]
 margin_right = 94.0
 margin_bottom = 14.0
 text = "BONES"
 
-[node name="Label2" type="Label" parent="Control/VBoxContainer/PanelContainer2/VBoxContainer"]
+[node name="Label2" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer2/VBoxContainer"]
 margin_top = 18.0
 margin_right = 94.0
 margin_bottom = 32.0
 text = "3"
 script = ExtResource( 3 )
 
-[node name="PanelContainer3" type="PanelContainer" parent="Control/VBoxContainer"]
+[node name="PanelContainer3" type="PanelContainer" parent="MarginContainer/Control/VBoxContainer"]
 margin_top = 100.0
 margin_right = 108.0
 margin_bottom = 146.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/PanelContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control/VBoxContainer/PanelContainer3"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 101.0
 margin_bottom = 39.0
 
-[node name="Label" type="Label" parent="Control/VBoxContainer/PanelContainer3/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer3/VBoxContainer"]
 margin_right = 94.0
 margin_bottom = 14.0
 text = "EAT FOR BONE"
 
-[node name="Label2" type="Label" parent="Control/VBoxContainer/PanelContainer3/VBoxContainer"]
+[node name="Label2" type="Label" parent="MarginContainer/Control/VBoxContainer/PanelContainer3/VBoxContainer"]
 margin_top = 18.0
 margin_right = 94.0
 margin_bottom = 32.0
 text = "1/2"
 script = ExtResource( 2 )
 
-[node name="ControlsPanel" parent="Control" instance=ExtResource( 4 )]
+[node name="ControlsPanel" parent="MarginContainer/Control" instance=ExtResource( 4 )]
+
+[node name="HumanEatenInfo" parent="MarginContainer/Control" instance=ExtResource( 5 )]
