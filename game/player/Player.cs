@@ -72,6 +72,8 @@ namespace Game
 
         [OnReadyGet("AnimationController")]
         private AnimationController animationController;
+        [OnReadyGet("DropDownParticles")]
+        private Particles2D dropDownParticles;
 
         public bool IsJumpButtonHeld { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
@@ -122,12 +124,12 @@ namespace Game
         public void JumpPressed()
         {
             var inputVelocity = DirectionClamp(InputProcessor.Instance.InputVelocity);
-            animationController.Play("jump");
             if (inputVelocity.y > 0.5)
             {
                 HandleJumpThroughPlatform();
                 return;
             }
+            animationController.Play("up");
             IsJumping = true;
             IsJumpButtonHeld = true;
             jumpHangTimeCurrent = 0f;
@@ -154,6 +156,7 @@ namespace Game
             CollisionMask = newMask;
             var tree = GetTree();
             IsFallingThrough = true;
+            animationController.Play("down");
             var count = 0;
             while (count < 5)
             {
@@ -246,7 +249,7 @@ namespace Game
             IsDashing = false;
             timeSpentFalling = 0f;
             if (!IsStunned)
-                animationController.Play("static");
+                animationController.Play("down");
         }
 
         private float previousHorizontalInputDirection;
@@ -313,15 +316,15 @@ namespace Game
             var isOnFloor = IsOnFloor();
             if (isOnFloor && !IsInAir && !IsStunned)
             {
+                var currAnim = animationController.CurrentAnimation;
                 if (horizontalVelocity.LengthSquared() > 0.1f)
                 {
-                    if (animationController.CurrentAnimation != "walk")
+                    if (currAnim != "walk")
                         animationController.Play("walk");
                 }
                 else
                 {
-
-                    if (animationController.CurrentAnimation != "static")
+                    if (currAnim != "static" && currAnim != "recovery")
                         animationController.Play("static");
                 }
             }
@@ -335,11 +338,14 @@ namespace Game
 
             if (isOnFloor && IsInAir)
             {
-                if (!IsStunned)
+                if (timeSpentFalling > 0.5f)
                 {
-                    animationController.Play("recovery");
-                    animationController.Queue("static");
+                    dropDownParticles.Visible = true;
+                    dropDownParticles.Restart();
                 }
+
+                if (!IsStunned)
+                    animationController.Play("recovery");
                 timeSpentFalling = 0f;
                 IsInAir = false;
                 HasDash = true;
@@ -357,6 +363,8 @@ namespace Game
             {
                 IsJumping = false;
                 timeSpentFalling = 0f;
+                if (animationController.CurrentAnimation != "down")
+                    animationController.Play("down");
             };
 
             return verticalVelocity;
