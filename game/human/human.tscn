@@ -169,7 +169,7 @@ tracks/12/keys = {
 "values": [ 3 ]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("Moustache:visible")
+tracks/13/path = NodePath("Moustache:frame")
 tracks/13/interp = 1
 tracks/13/loop_wrap = false
 tracks/13/imported = false
@@ -178,10 +178,10 @@ tracks/13/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ 0.0 ]
 }
 tracks/14/type = "value"
-tracks/14/path = NodePath("Moustache:frame")
+tracks/14/path = NodePath("Hat1:texture")
 tracks/14/interp = 1
 tracks/14/loop_wrap = false
 tracks/14/imported = false
@@ -190,10 +190,10 @@ tracks/14/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 0.0 ]
+"values": [ ExtResource( 3 ) ]
 }
 tracks/15/type = "value"
-tracks/15/path = NodePath("Hat1:texture")
+tracks/15/path = NodePath("Hat1:hframes")
 tracks/15/interp = 1
 tracks/15/loop_wrap = false
 tracks/15/imported = false
@@ -202,10 +202,10 @@ tracks/15/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 3 ) ]
+"values": [ 4 ]
 }
 tracks/16/type = "value"
-tracks/16/path = NodePath("Hat1:hframes")
+tracks/16/path = NodePath("Hat1:vframes")
 tracks/16/interp = 1
 tracks/16/loop_wrap = false
 tracks/16/imported = false
@@ -214,10 +214,10 @@ tracks/16/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 4 ]
+"values": [ 3 ]
 }
 tracks/17/type = "value"
-tracks/17/path = NodePath("Hat1:vframes")
+tracks/17/path = NodePath("Hat1:frame")
 tracks/17/interp = 1
 tracks/17/loop_wrap = false
 tracks/17/imported = false
@@ -226,10 +226,10 @@ tracks/17/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ 0.0 ]
 }
 tracks/18/type = "value"
-tracks/18/path = NodePath("Hat1:visible")
+tracks/18/path = NodePath("Hat2:texture")
 tracks/18/interp = 1
 tracks/18/loop_wrap = false
 tracks/18/imported = false
@@ -238,10 +238,10 @@ tracks/18/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ ExtResource( 4 ) ]
 }
 tracks/19/type = "value"
-tracks/19/path = NodePath("Hat1:frame")
+tracks/19/path = NodePath("Hat2:hframes")
 tracks/19/interp = 1
 tracks/19/loop_wrap = false
 tracks/19/imported = false
@@ -250,10 +250,10 @@ tracks/19/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 0.0 ]
+"values": [ 4 ]
 }
 tracks/20/type = "value"
-tracks/20/path = NodePath("Hat2:texture")
+tracks/20/path = NodePath("Hat2:vframes")
 tracks/20/interp = 1
 tracks/20/loop_wrap = false
 tracks/20/imported = false
@@ -262,51 +262,15 @@ tracks/20/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ 3 ]
 }
 tracks/21/type = "value"
-tracks/21/path = NodePath("Hat2:hframes")
+tracks/21/path = NodePath("Hat2:frame")
 tracks/21/interp = 1
 tracks/21/loop_wrap = false
 tracks/21/imported = false
 tracks/21/enabled = true
 tracks/21/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 4 ]
-}
-tracks/22/type = "value"
-tracks/22/path = NodePath("Hat2:vframes")
-tracks/22/interp = 1
-tracks/22/loop_wrap = false
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 3 ]
-}
-tracks/23/type = "value"
-tracks/23/path = NodePath("Hat2:visible")
-tracks/23/interp = 1
-tracks/23/loop_wrap = false
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/24/type = "value"
-tracks/24/path = NodePath("Hat2:frame")
-tracks/24/interp = 1
-tracks/24/loop_wrap = false
-tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -1231,6 +1195,7 @@ __meta__ = {
 }
 
 [node name="Moustache" type="Sprite" parent="Path2D/PathFollow2D/SpriteHolder/SpriteOffset"]
+visible = false
 self_modulate = Color( 0.352941, 0.619608, 1, 1 )
 texture = ExtResource( 5 )
 hframes = 4
@@ -1240,6 +1205,7 @@ __meta__ = {
 }
 
 [node name="Hat1" type="Sprite" parent="Path2D/PathFollow2D/SpriteHolder/SpriteOffset"]
+visible = false
 self_modulate = Color( 1, 0.4, 0.4, 1 )
 texture = ExtResource( 3 )
 hframes = 4
@@ -1249,6 +1215,7 @@ __meta__ = {
 }
 
 [node name="Hat2" type="Sprite" parent="Path2D/PathFollow2D/SpriteHolder/SpriteOffset"]
+visible = false
 texture = ExtResource( 4 )
 hframes = 4
 vframes = 3

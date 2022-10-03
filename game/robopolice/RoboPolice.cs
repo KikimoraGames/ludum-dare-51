@@ -18,9 +18,11 @@ namespace Game
 
         [OnReadyGet("SpriteHolder")]
         private SpriteHolder spriteHolder;
-        [OnReadyGet("SpriteHolder/Sprite")]
-        private Sprite sprite;
+        [OnReadyGet("SpriteHolder/SpriteOffset")]
+        private Node2D sprite;
 
+        [OnReadyGet("AnimationPlayer")]
+        private AnimationPlayer animationPlayer;
 
         [OnReady]
         private void SetCurrentMovementSpeed() => currentTrackFollowMovementSpeed = MovementSpeedPixelsPerSecond;
@@ -50,6 +52,7 @@ namespace Game
 
                 IsTrackingPlayer = false;
                 IsReturningToPatrol = true;
+                animationPlayer.Play("disarmed");
                 return;
             }
 
@@ -66,6 +69,7 @@ namespace Game
 
                 IsTrackingPlayer = true;
                 IsReturningToPatrol = false;
+                animationPlayer.Play("head up");
                 return;
             }
 
@@ -92,6 +96,7 @@ namespace Game
             player = p;
             IsTrackingPlayer = true;
             Events.PlaySFX(playerDetectedSFX);
+            animationPlayer.Play("head up");
         }
 
         public void BodyExitedDetectionArea(PhysicsBody2D b)
@@ -104,6 +109,7 @@ namespace Game
             {
                 IsTrackingPlayer = false;
                 IsReturningToPatrol = true;
+                animationPlayer.Play("disarmed");
             }
         }
 
@@ -117,7 +123,8 @@ namespace Game
             Events.PlaySFX(playerZapSFX);
             p.Stun(StunForSeconds);
             var tween = CreateTween();
-            tween.TweenProperty(sprite, "scale", Vector2.One * 20, 0.15f).AsRelative().SetTrans(Tween.TransitionType.Bounce).SetEase(Tween.EaseType.In);
+            animationPlayer.Play("attack");
+            tween.TweenProperty(sprite, "scale", Vector2.One * 1.25f, 0.15f).AsRelative().SetTrans(Tween.TransitionType.Bounce).SetEase(Tween.EaseType.In);
             tween.TweenProperty(sprite, "scale", sprite.Scale, 0.1f).SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
             tween.TweenCallback(this, nameof(ZapAnimationDone));
         }
@@ -127,6 +134,7 @@ namespace Game
             IsZapping = false;
             IsTrackingPlayer = false;
             IsReturningToPatrol = true;
+            animationPlayer.Play("disarmed");
         }
 
     }

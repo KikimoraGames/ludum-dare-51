@@ -155,6 +155,7 @@ namespace Game
                 hatSprite.Visible = false;
             else
             {
+                hatSprite.Visible = true;
                 hatSprite.Texture = hat;
                 hatSprite.SelfModulate = hatColor;
             }
