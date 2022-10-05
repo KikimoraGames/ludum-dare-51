@@ -44,6 +44,7 @@ namespace Game
         public virtual void Begin()
         {
             PlayerPower.Instance.LevelOverride = 1f;
+            Engine.TimeScale = 1f;
             InputProcessor.Instance.IgnoreInput = false;
         }
 

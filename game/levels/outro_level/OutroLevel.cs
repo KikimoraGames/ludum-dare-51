@@ -8,6 +8,7 @@ namespace Game
     {
         public override void Begin()
         {
+            Engine.TimeScale = 1f;
             InputProcessor.Instance.IgnoreInput = false;
         }
 

@@ -39,6 +39,8 @@ namespace Game
         {
             var c = GetChannel();
             var id = Time.GetTicksUsec();
+            while (channelsPlaying.ContainsKey(id))
+                id++;
             c.Stream = clip;
             c.Bus = string.IsNullOrEmpty(onBus) ? defaultBus : onBus;
             channelsPlaying.Add(id, c);
